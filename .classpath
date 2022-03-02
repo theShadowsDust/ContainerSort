@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/User/Desktop/PluginSrc/spigot_libraries/spigot-1.12.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Desktop/PluginSrc/spigot_libraries/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
