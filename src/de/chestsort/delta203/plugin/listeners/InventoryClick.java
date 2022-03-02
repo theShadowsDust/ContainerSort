@@ -24,7 +24,7 @@ public class InventoryClick implements Listener {
 	@EventHandler
 	public void onClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
-		if(e.getInventory().getName().equalsIgnoreCase(ConfigYML.get().getString("gui.name").replace('&', '§'))) {
+		if(e.getInventory().getTitle().equalsIgnoreCase(ConfigYML.get().getString("gui.name").replace('&', '§'))) {
 			e.setCancelled(true);
 			if(!p.hasPermission(ConfigYML.get().getString("permission"))) {
 				e.getView().close();

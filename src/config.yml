@@ -11,6 +11,7 @@ sound:
   # type None for no sound
   # default 1.8.8: CHEST_OPEN, NOTE_PLING, NOTE_BASS 
   # for 1.12.2: BLOCK_CHEST_OPEN, BLOCK_NOTE_PLING, BLOCK_NOTE_BASS
+  # for 1.17.1: BLOCK_CHEST_OPEN, BLOCK_NOTE_BLOCK_PLING, BLOCK_NOTE_BLOCK_BASS
   openGui: CHEST_OPEN
   sort_success: NOTE_PLING
   sort_failed: NOTE_BASS
