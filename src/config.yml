@@ -2,7 +2,7 @@
 # Plugin by Delta203
 # Requires Spigot, Java 8
 
-permission: chestsort.use
+permission: 'chestsort.use'
 
 disabledWorlds:
   - 'test'
