@@ -15,3 +15,4 @@ You can edit the permission in the config.yml
 
 **Download:**
 [https://www.spigotmc.org/resources/chestsort-1-8-x-1-18-x-spigot.100400/](https://www.spigotmc.org/resources/chestsort-1-8-x-1-18-x-spigot.100400/)
+[https://chunkfactory.com/product/chestsort-1-8-x-1-18-x-spigot.3103/](https://chunkfactory.com/product/chestsort-1-8-x-1-18-x-spigot.3103/)
