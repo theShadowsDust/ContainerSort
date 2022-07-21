@@ -10,6 +10,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public final class PlayerInteractListener implements Listener {
 
 	private final ChestSortApi chestSortApi;

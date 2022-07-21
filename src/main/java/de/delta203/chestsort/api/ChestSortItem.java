@@ -9,7 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class ChestSortItem {
+@SuppressWarnings("unused")
+public final class ChestSortItem {
 
     private String name;
     private Component displayName;

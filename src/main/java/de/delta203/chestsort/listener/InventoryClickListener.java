@@ -1,7 +1,10 @@
 package de.delta203.chestsort.listener;
 
-import de.delta203.chestsort.SortType;
 import de.delta203.chestsort.api.ChestSortApi;
+import de.delta203.chestsort.api.ChestSortItem;
+import de.delta203.chestsort.api.util.InventoryUtil;
+import de.delta203.chestsort.api.util.SortType;
+import de.delta203.chestsort.api.util.SoundType;
 import org.bukkit.Location;
 import org.bukkit.block.*;
 import org.bukkit.entity.Player;
@@ -16,6 +19,7 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public final class InventoryClickListener implements Listener {
 
 	private final ChestSortApi chestSortApi;

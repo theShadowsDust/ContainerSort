@@ -7,7 +7,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class PlayerConnectionListener implements Listener {
+@SuppressWarnings("unused")
+public final class PlayerConnectionListener implements Listener {
 
     private final ChestSortApi chestSortApi;
 

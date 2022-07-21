@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ChestSortPluginConfiguration {
+@SuppressWarnings("unused")
+public final class ChestSortPluginConfiguration {
 
     private final ChestSortApi chestSortApi;
     private final Map<SoundType, Sound> soundTypesMap;

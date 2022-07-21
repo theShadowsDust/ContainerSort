@@ -1,8 +1,8 @@
 package de.delta203.chestsort.api;
 
 import de.delta203.chestsort.ChestSortPlugin;
+import de.delta203.chestsort.api.util.SoundType;
 import de.delta203.chestsort.configuration.ChestSortPluginConfiguration;
-import de.delta203.chestsort.enums.SoundType;
 import de.delta203.chestsort.inventory.SortChestInventory;
 import de.delta203.chestsort.registry.ItemRegistry;
 import net.kyori.adventure.text.Component;
