@@ -1,6 +1,9 @@
+import org.jetbrains.changelog.date
+
 plugins {
     id("java")
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1"
+    id("org.jetbrains.changelog") version "1.3.1"
 }
 
 group = "de.delta203"
@@ -38,4 +41,13 @@ bukkit {
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     author = "Delta203"
     authors = listOf("UniqueGame")
+}
+
+changelog {
+    path.set("${project.projectDir}/CHANGELOG.md")
+    header.set(provider { "[${version.get()}] - ${date()}" })
+    itemPrefix.set("-")
+    keepUnreleasedSection.set(true)
+    unreleasedTerm.set("[Unreleased]")
+    groups.set(listOf("Added", "Changed", "Deprecated", "Removed", "Fixed", "Security"))
 }
