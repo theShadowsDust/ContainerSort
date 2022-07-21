@@ -3,6 +3,10 @@
 
 Sort your chest or barrel in a fast way  
 
+# WARNING
+
+**Only JAVA 17 is supported!!!**
+
 **Installation (plug and play):**  
 You will receive a .jar file. You have to put the file into your plugins folder. Run your server -> **done!**<br/>
 
