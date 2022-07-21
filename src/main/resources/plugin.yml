@@ -1,0 +1,5 @@
+name: ChestSort
+version: 1.0
+author: Delta203
+
+main: de.chestsort.delta203.plugin.ChestSort
