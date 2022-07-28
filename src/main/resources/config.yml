@@ -1,60 +1,11 @@
-# ChestSort 1.0
-# Plugin by Delta203 and UniqueGame
-# Requires Spigot, Java 8
+# ContainerSort 1.0.0
+# Plugin by UniqueGame
+# Requires Paper, Java 17
 
-permission: 'chestsort.use'
+protect-signs: true
 
 disabledWorlds:
-  - 'test'
+  - 'world_nether'
+  - 'world_the_end'
 
-# Lock the container while sorting to prevent item dupes or removing
-lock-containers: true
-
-sound:
-  # type an # symbol for the line below for no sound
-  # default 1.8.8: CHEST_OPEN, NOTE_PLING, NOTE_BASS
-  # for 1.12.2: BLOCK_CHEST_OPEN, BLOCK_NOTE_PLING, BLOCK_NOTE_BASS
-  # for 1.17.1: BLOCK_CHEST_OPEN, BLOCK_NOTE_BLOCK_PLING, BLOCK_NOTE_BLOCK_BASS
-  openGui: BLOCK_CHEST_OPEN
-  sort_success: BLOCK_NOTE_BLOCK_PLING
-  sort_failed: BLOCK_NOTE_BLOCK_BASS
-
-gui:
-  name: '&8Sort chest'
-  # Type an # symbol for the line below
-  placeholder_item: BLACK_STAINED_GLASS_PANE
-
-  chest:
-    slot: 1
-    lore:
-      - '&7X&8: &e%x%'
-      - '&7Y&8: &e%y%'
-      - '&7Z&8: &e%z%'
-  items:
-
-    alphabetically:
-      slot: 3
-      name: '&aSort&8: &7Alphabetically'
-      material: LIME_WOOL
-      type: alphabetically
-      lore:
-        - '&7Click here to sort the chest'
-
-    highest_item_amount:
-      slot: 5
-      name: '&aSort&8: &7Highest Amount'
-      material: ORANGE_WOOL
-      type: highest_item_amount
-      lore:
-        - '&7Click here to sort the chest'
-
-    lowest_item_amount:
-      slot: 7
-      name: '&aSort&8: &7Lowest Amount'
-      material: YELLOW_WOOL
-      type: lowest_item_amount
-      lore:
-        - '&7Click here to sort the chest'
-
-# Don't change the value
-config-version: 1.0
+sound-sort-success: BLOCK_NOTE_BLOCK_PLING
