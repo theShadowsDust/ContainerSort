@@ -1,4 +1,4 @@
-package de.delta203.chestsort.api.util;
+package de.uniquegame.containersort.api.util;
 
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,6 @@ public final class InventoryUtil {
 
     public static void sortContainer(@NotNull SortType sortType, @NotNull Inventory inventory) {
 
-        // Alle Items in eine Liste speichern, um effizienter zu sortieren
         List<ItemStack> list = new ArrayList<>();
         for (ItemStack content : inventory.getContents()) {
             if (content != null) {
