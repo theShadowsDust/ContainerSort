@@ -29,18 +29,16 @@ public class ContainerSortPlugin extends JavaPlugin {
 
     @Override
     public void onLoad() {
-
         Optional<Integer> javaVersionOptional = Runtime.version().build();
         if (javaVersionOptional.orElse(8) < 17) {
             this.getServer().getPluginManager().disablePlugin(this);
         }
-
-        ConfigurationSerialization.registerClass(ContainerSortSettings.class);
     }
 
     @Override
     public void onEnable() {
 
+        ConfigurationSerialization.registerClass(ContainerSortSettings.class);
         PluginManager pluginManager = getServer().getPluginManager();
 
         this.containerSortApi = new ContainerSortApiImpl(this);
