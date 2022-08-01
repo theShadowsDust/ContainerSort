@@ -21,7 +21,8 @@ public class ContainerSortCommand {
     @CommandPermission("containersort.command.languagecode")
     @CommandDescription("Get your client language code")
     public void executeLanguageCodeCommand(Player player) {
-        player.sendMessage(this.containerSortApi.getLanguageService().getMessage("client-language-code", player, player.locale()));
+        player.sendMessage(this.containerSortApi.getLanguageService().getMessage("client-language-code", player,
+                this.containerSortApi.getLanguageService().prefix(), player.locale()));
     }
 
     @CommandMethod("containersort editsign")
@@ -30,17 +31,20 @@ public class ContainerSortCommand {
 
         Block targetBlock = player.getTargetBlock(this.containerSortApi.getSettings().getMaxSignDistance());
         if (targetBlock == null || !(targetBlock.getState() instanceof Sign sign)) {
-            player.sendMessage(this.containerSortApi.getLanguageService().getMessage("no-sign-in-line-of-sight", player));
+            player.sendMessage(this.containerSortApi.getLanguageService().getMessage("no-sign-in-line-of-sight",
+                    player, this.containerSortApi.getLanguageService().prefix()));
             return;
         }
 
         if (!this.containerSortApi.isSortSign(sign)) {
-            player.sendMessage(this.containerSortApi.getLanguageService().getMessage("invalid-sign", player));
+            player.sendMessage(this.containerSortApi.getLanguageService().getMessage("invalid-sign", player,
+                    this.containerSortApi.getLanguageService().prefix()));
             return;
         }
 
-        if (!this.containerSortApi.isSignOwner(player, sign)) {
-            player.sendMessage(this.containerSortApi.getLanguageService().getMessage("invalid-sign-owner", player));
+        if (!this.containerSortApi.isSignOwner(player.getUniqueId(), sign)) {
+            player.sendMessage(this.containerSortApi.getLanguageService().getMessage("invalid-sign-owner", player,
+                    this.containerSortApi.getLanguageService().prefix()));
             return;
         }
 
