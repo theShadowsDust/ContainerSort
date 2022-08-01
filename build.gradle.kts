@@ -4,19 +4,22 @@ plugins {
     id("java")
     id("net.minecrell.plugin-yml.bukkit") version "0.5.1"
     id("org.jetbrains.changelog") version "1.3.1"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("xyz.jpenilla.run-paper") version "1.0.6"
 }
 
-group = "de.delta203"
+group = "de.uniquegame"
 version = "1.0.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
     maven("https://papermc.io/repo/repository/maven-public/")
+    maven("https://repo.dmulloy2.net/repository/public/")
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.19-R0.1-SNAPSHOT")
-
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT");
     implementation("cloud.commandframework", "cloud-paper", "1.7.0")
     implementation("cloud.commandframework", "cloud-annotations", "1.7.0")
     implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0")
@@ -32,11 +35,14 @@ tasks {
         options.encoding = "UTF-8"
     }
 
-    build {
-        dependsOn(jar)
+    runServer {
+        minecraftVersion("1.19")
     }
 
-    jar {
+    build {
+        dependsOn(shadowJar)
+    }
+    shadowJar {
         archiveFileName.set("${rootProject.name}.${archiveExtension.getOrElse("jar")}")
     }
 }
@@ -44,22 +50,9 @@ tasks {
 bukkit {
     main = "${rootProject.group}.containersort.ContainerSortPlugin"
     apiVersion = "1.18"
-    name = "ChestSort"
+    name = "ContainerSort"
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.POSTWORLD
-    author = "Delta203"
-    authors = listOf("UniqueGame")
-    permissions {
-        register("containersort.*") {
-            children = listOf("container.sort.allow")
-            childrenMap = mapOf("container.sort.allow" to true)
-            default = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default.OP
-        }
-
-        register("container.sort.allow") {
-            description = "Allows you to sort containers"
-            default = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.Permission.Default.OP
-        }
-    }
+    author = "UniqueGame"
 }
 
 changelog {
