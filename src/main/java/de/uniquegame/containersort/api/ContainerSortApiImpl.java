@@ -1,20 +1,17 @@
 package de.uniquegame.containersort.api;
 
 import de.uniquegame.containersort.ContainerSortPlugin;
-import de.uniquegame.containersort.api.util.SortType;
 import de.uniquegame.containersort.configuration.ContainerSortPluginConfiguration;
 import de.uniquegame.containersort.configuration.ContainerSortSettings;
 import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.service.PersistentDataStoreService;
-import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.Sign;
+import org.bukkit.block.*;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.UUID;
 
 public final class ContainerSortApiImpl implements ContainerSortApi {
@@ -45,19 +42,19 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     }
 
     @Override
-    public boolean isSignOwner(@NotNull Player player, @NotNull Sign sign) {
+    public boolean isSignOwner(@NotNull UUID playerId, @NotNull Sign sign) {
 
-        if (player.hasPermission("containersort.sort.admin")) return true;
         PersistentDataContainer container = sign.getPersistentDataContainer();
-        NamespacedKey signOwnerKey = this.persistentDataStoreService.getNameSpacedKey(PersistentDataStoreService.SORT_SIGN_OWNER);
+        NamespacedKey signOwnerKey = this.persistentDataStoreService.
+                getNameSpacedKey(PersistentDataStoreService.SORT_SIGN_OWNER);
 
         if (signOwnerKey == null) return false;
         if (!container.has(signOwnerKey)) return false;
 
-        String value = container.get(signOwnerKey, PersistentDataType.STRING);
+        UUID value = container.get(signOwnerKey, PersistentDataStoreService.UUID_TAG_TYPE);
         if (value == null) return false;
 
-        return UUID.fromString(value).equals(player.getUniqueId());
+        return value.equals(playerId);
     }
 
     @Override
@@ -86,25 +83,25 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     }
 
     @Override
-    public void saveSignData(@NotNull Player player, @NotNull Sign sign, @NotNull SortType sortType) {
-
-        List<Component> signLayout = this.getLanguageService().getSignLayout(player.getUniqueId(), sortType);
-        for (int i = 0; i <= 4; i++) {
-            sign.line(i, signLayout.get(i));
-        }
-
-        sign.update();
+    public void saveSignData(@NotNull Player player, @NotNull Sign sign) {
 
         this.getDataStoreService().applyPersistentData(
                 sign,
                 PersistentDataStoreService.SORT_SIGN_OWNER,
-                PersistentDataType.STRING,
-                player.getUniqueId().toString());
+                PersistentDataStoreService.UUID_TAG_TYPE, player.getUniqueId());
 
         this.getDataStoreService().applyPersistentData(
                 sign,
                 PersistentDataStoreService.SORT_SIGN,
                 PersistentDataType.BYTE,
                 (byte) 1);
+
+        sign.update();
+    }
+
+    @Override
+    public boolean isValidContainer(@NotNull BlockState state) {
+        if (!(state instanceof Container container)) return false;
+        return container instanceof Chest || container instanceof Barrel || container instanceof DoubleChest;
     }
 }
