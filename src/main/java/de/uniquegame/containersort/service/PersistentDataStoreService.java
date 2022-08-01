@@ -1,6 +1,7 @@
 package de.uniquegame.containersort.service;
 
 import de.uniquegame.containersort.api.ContainerSortApi;
+import de.uniquegame.containersort.api.UUIDTagType;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
@@ -15,6 +16,7 @@ public class PersistentDataStoreService {
 
     public static final String SORT_SIGN_OWNER = "sign_owner";
     public static final String SORT_SIGN = "sort_sign";
+    public static final UUIDTagType UUID_TAG_TYPE = new UUIDTagType();
 
     private final ContainerSortApi api;
     private final List<NamespacedKey> nameSpacedKeys;
