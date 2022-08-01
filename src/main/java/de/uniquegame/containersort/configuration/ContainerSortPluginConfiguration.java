@@ -43,7 +43,11 @@ public final class ContainerSortPluginConfiguration {
 
         File file = new File(dataFolder, "config.yml");
         if (!file.exists()) {
-            this.containerSortApi.getPlugin().saveResource("config.yml", false);
+            try {
+                Files.createFile(file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         this.settings = this.getConfig().getObject("settings", ContainerSortSettings.class);
@@ -51,9 +55,9 @@ public final class ContainerSortPluginConfiguration {
 
             this.settings = new ContainerSortSettings(
                     Sound.BLOCK_NOTE_BLOCK_PLING,
-                    List.of("&f[&6ContainerSort&f]", "%sign_owner_name%", "%container_sort_type%", " "),
+                    List.of("world_nether", "world_the_end"),
                     true,
-                    List.of("world_nether", "world_the_end"), 4);
+                    List.of("&f[&6ContainerSort&f]", "%sign_owner_name%", "%container_sort_type%", " "), 4);
 
             this.getConfig().set("settings", this.settings);
             this.containerSortApi.getPlugin().saveConfig();
