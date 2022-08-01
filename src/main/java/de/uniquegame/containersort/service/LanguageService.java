@@ -6,7 +6,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +14,7 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.Locale;
 
 public class LanguageService {
 
@@ -32,10 +31,17 @@ public class LanguageService {
         this.config = YamlConfiguration.loadConfiguration(file);
     }
 
+    public String prefix() {
+        return this.config.getString("messages.prefix");
+    }
+
     @NotNull
     public Component getMessage(@NotNull String key, @NotNull Player player, Object... placeholders) {
 
         String path = String.format("messages.%s.%s", player.locale(), key);
+        if (!this.config.isSet(path)) {
+            path = String.format("messages.%s.%s", Locale.ENGLISH, key);
+        }
 
         return translateLegacyColorCodes(MessageFormat.format(
                 this.config.getString(path, String.format("N/A (%s)", path)), placeholders));
@@ -61,17 +67,11 @@ public class LanguageService {
     }
 
     @NotNull
-    public List<Component> getSignLayout(@NotNull UUID uuid, @NotNull SortType sortType) {
-
-        OfflinePlayer offlinePlayer = this.containerSortApi.getPlugin().getServer().getOfflinePlayer(uuid);
-        String name = offlinePlayer.getName();
-
-        if (name == null) return List.of();
-
+    public List<Component> getSignLayout(@NotNull String playerName, @NotNull SortType sortType) {
         List<Component> layout = new ArrayList<>();
         for (String line : this.containerSortApi.getSettings().getSignLayout()) {
             layout.add(translateLegacyColorCodes(line.
-                    replace("%sign_owner_name%", name).
+                    replace("%sign_owner_name%", playerName).
                     replace("%container_sort_type%", sortType.getDisplayName())));
         }
 
