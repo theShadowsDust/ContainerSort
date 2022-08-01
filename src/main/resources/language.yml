@@ -3,20 +3,31 @@
 # You can add more languages with this format.
 # messages:
 #   <language_code_here>:
-#      cannot-find-sort-type: '&cThe Sort type {0} cannot be found.'
+#     cannot-find-sort-type: '{0} &cThe Sort type cannot be found.'
+#     client-language-code: '{0} &7Your Language Code: &6{1}'
+#     sign-successfully-created: '{0} &7You have &asuccessfully &7created the Sign.'
+#     no-sign-in-line-of-sight: '{0} &cCannot find a sign in your line of sight'
+#     invalid-sign: "{0} &cThis sign is not valid"
+#     invalid-sign-owner: '{0} &cYou are not the Owner of this sign'
+#     invalid-player-name: '{0} &cYou are not permitted to created sort signs for other players'
 
 messages:
+  prefix: '&f[&6ContainerSort&f]'
   en_US:
-    cannot-find-sort-type: '&cThe Sort type {0} cannot be found.'
-    client-language-code: '&7Your Language Code: {0}'
-    sign-successfully-created: '&7You have &asuccessfully &7created the Sign.'
-    no-sign-in-line-of-sight: '&cCannot find a sign in your line of sight'
-    invalid-sign: "&cThis sign is not valid"
-    invalid-sign-owner: '&cYou are not the Owner of this sign'
+    cannot-find-sort-type: '{0} &cThe Sort type cannot be found.'
+    client-language-code: '{0} &7Your Language Code: &6{1}'
+    sign-successfully-created: '{0} &7You have &asuccessfully &7created the Sign.'
+    no-sign-in-line-of-sight: '{0} &cCannot find a sign in your line of sight'
+    invalid-sign: "{0} &cThis sign is not valid"
+    invalid-sign-owner: '{0} &cYou are not the Owner of this sign'
+    invalid-player-name: '{0} &cYou are not permitted to created sort signs for other players'
+    no-connected-container-found: '{0} &cCould not find an connected container'
   de_DE:
-    cannot-find-sort-type: '&cDer Sort typ {0} konnte nicht gefunden werden.'
-    client-language-code: '&7Dein Language Code: {0}'
-    sign-successfully-created: '&7Du hast &aerfolgreich &7das Schild &7erstellt.'
-    no-sign-in-line-of-sight: '&cEs konnte kein Schild in deiner Blickrichtung gefunden werden.'
-    invalid-sign: "&cDu kannst dieses Schild nicht bearbeiten."
-    invalid-sign-owner: '&cDu bist nicht der Besitzer von diesem Schild'
+    cannot-find-sort-type: '{0} &cDer Sort typ konnte nicht gefunden werden.'
+    client-language-code: '{0} &7Dein Language Code: &6{1}'
+    sign-successfully-created: '{0} &7Du hast &aerfolgreich &7das Schild &7erstellt.'
+    no-sign-in-line-of-sight: '{0} &cEs konnte kein Schild in deiner Blickrichtung gefunden werden.'
+    invalid-sign: "{0} &cDu kannst dieses Schild nicht bearbeiten."
+    invalid-sign-owner: '{0} &cDu bist nicht der Besitzer von diesem Schild'
+    invalid-player-name: '{0} &cDu darfst keine Sortierschilder für andere Spieler erstellen'
+    no-connected-container-found: '{0} &cEs konnte kein Container gefunden werden.'
