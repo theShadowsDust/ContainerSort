@@ -10,6 +10,7 @@
 #     invalid-sign: "{0} &cThis sign is not valid"
 #     invalid-sign-owner: '{0} &cYou are not the Owner of this sign'
 #     invalid-player-name: '{0} &cYou are not permitted to created sort signs for other players'
+#     cannot-find-username: '{0} &cThe player name cannot be found.'
 
 messages:
   prefix: '&f[&6ContainerSort&f]'
@@ -22,6 +23,7 @@ messages:
     invalid-sign-owner: '{0} &cYou are not the Owner of this sign'
     invalid-player-name: '{0} &cYou are not permitted to created sort signs for other players'
     no-connected-container-found: '{0} &cCould not find an connected container'
+    cannot-find-username: '{0} &cThe player name cannot be found.'
   de_DE:
     cannot-find-sort-type: '{0} &cDer Sort typ konnte nicht gefunden werden.'
     client-language-code: '{0} &7Dein Language Code: &6{1}'
@@ -31,3 +33,4 @@ messages:
     invalid-sign-owner: '{0} &cDu bist nicht der Besitzer von diesem Schild'
     invalid-player-name: '{0} &cDu darfst keine Sortierschilder für andere Spieler erstellen'
     no-connected-container-found: '{0} &cEs konnte kein Container gefunden werden.'
+    cannot-find-username: '{0} &cDer Spielername konnte nicht gefunden werden.'
