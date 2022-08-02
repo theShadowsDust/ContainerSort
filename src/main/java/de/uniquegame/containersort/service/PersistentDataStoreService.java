@@ -24,6 +24,7 @@ public class PersistentDataStoreService {
     public PersistentDataStoreService(@NotNull ContainerSortApi api) {
         this.api = api;
         this.nameSpacedKeys = new ArrayList<>();
+        registerNameSpacedKey(SORT_SIGN, SORT_SIGN_OWNER);
     }
 
     @NotNull
@@ -46,6 +47,16 @@ public class PersistentDataStoreService {
         return result;
     }
 
+    public void registerNameSpacedKey(String... keys) {
+        for (String key : keys) {
+            NamespacedKey namespacedKey = getNameSpacedKey(key);
+            if (namespacedKey == null) {
+                namespacedKey = new NamespacedKey(this.api.getPlugin(), key);
+                this.nameSpacedKeys.add(namespacedKey);
+            }
+        }
+    }
+
     public boolean has(@NotNull PersistentDataHolder dataHolder, @NotNull String key) {
         NamespacedKey namespacedKey = getNameSpacedKey(key);
         if (namespacedKey == null) return false;
@@ -63,11 +74,7 @@ public class PersistentDataStoreService {
                                            @NotNull Z value) {
 
         NamespacedKey namespacedKey = getNameSpacedKey(key);
-        if (namespacedKey == null) {
-            namespacedKey = new NamespacedKey(this.api.getPlugin(), key);
-            this.nameSpacedKeys.add(namespacedKey);
-        }
-
+        if (namespacedKey == null) return;
         dataHolder.getPersistentDataContainer().set(namespacedKey, type, value);
     }
 
