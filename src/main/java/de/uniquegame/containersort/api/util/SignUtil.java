@@ -4,8 +4,13 @@ import de.uniquegame.containersort.api.ContainerSortApiImpl;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Rotatable;
+import org.bukkit.block.data.type.WallSign;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,7 +27,7 @@ public class SignUtil {
         CompletableFuture<UUID> future = CompletableFuture.supplyAsync(() -> {
             UUID playerId = null;
             for (int i = 0; i < sign.lines().size() && playerId == null; i++) {
-                UUID uuid = Bukkit.getPlayerUniqueId(PlainTextComponentSerializer.plainText().serialize(sign.line(i)));
+                var uuid = Bukkit.getPlayerUniqueId(PlainTextComponentSerializer.plainText().serialize(sign.line(i)));
                 if (uuid == null) continue;
                 playerId = uuid;
             }
@@ -38,6 +43,27 @@ public class SignUtil {
         }
     }
 
+    public static void breakSign(@NotNull Player player, @NotNull Component message, @NotNull Sign sign) {
+        player.sendMessage(message);
+        sign.getBlock().breakNaturally(true);
+    }
+
+    @Nullable
+    public static Container findConnectedContainer(@NotNull Sign sign) {
+        var blockData = sign.getBlockData();
+        Block block = null;
+
+        if (blockData instanceof Rotatable) {
+            block = sign.getBlock().getRelative(BlockFace.DOWN);
+        }
+
+        if (blockData instanceof WallSign wallSign) {
+            block = sign.getBlock().getRelative(wallSign.getFacing().getOppositeFace());
+        }
+
+        return block.getState() instanceof Container container ? container : null;
+    }
+
     @Nullable
     public static String findPlayerName(@NotNull List<Component> lines) {
 
@@ -45,14 +71,14 @@ public class SignUtil {
             String playerName = null;
             for (int i = 0; i < lines.size() && playerName == null; i++) {
 
-                String line = PlainTextComponentSerializer.plainText().serialize(lines.get(i));
+                var line = PlainTextComponentSerializer.plainText().serialize(lines.get(i));
 
                 if (line.isEmpty()) continue;
 
-                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(line);
+                var offlinePlayer = Bukkit.getOfflinePlayer(line);
                 if (!offlinePlayer.hasPlayedBefore()) continue;
 
-                String name = offlinePlayer.getName();
+                var name = offlinePlayer.getName();
                 if (name == null) continue;
                 if (!name.equalsIgnoreCase(line)) continue;
                 playerName = name;
