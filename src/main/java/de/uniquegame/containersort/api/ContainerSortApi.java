@@ -35,7 +35,7 @@ public interface ContainerSortApi {
 
     ContainerSortSettings getSettings();
 
-    void saveSignData(@NotNull Player player, @NotNull Sign sign);
+    void saveSignData(@NotNull UUID playerId, @NotNull Sign sign);
 
     boolean isValidContainer(@NotNull BlockState state);
 }

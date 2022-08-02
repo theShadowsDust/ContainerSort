@@ -7,15 +7,17 @@ import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.service.PersistentDataStoreService;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.*;
-import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public final class ContainerSortApiImpl implements ContainerSortApi {
 
+    public static final ExecutorService EXECUTOR_SERVICE = Executors.newScheduledThreadPool(10);
     private final ContainerSortPlugin plugin;
     private final ContainerSortPluginConfiguration configuration;
     private final PersistentDataStoreService persistentDataStoreService;
@@ -83,12 +85,12 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     }
 
     @Override
-    public void saveSignData(@NotNull Player player, @NotNull Sign sign) {
+    public void saveSignData(@NotNull UUID playerId, @NotNull Sign sign) {
 
         this.getDataStoreService().applyPersistentData(
                 sign,
                 PersistentDataStoreService.SORT_SIGN_OWNER,
-                PersistentDataStoreService.UUID_TAG_TYPE, player.getUniqueId());
+                PersistentDataStoreService.UUID_TAG_TYPE, playerId);
 
         this.getDataStoreService().applyPersistentData(
                 sign,
