@@ -34,7 +34,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.19")
+        minecraftVersion("1.19.1")
     }
 
     build {
