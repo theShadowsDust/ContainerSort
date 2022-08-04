@@ -1,4 +1,4 @@
-package de.uniquegame.containersort.api.util;
+package de.uniquegame.containersort.api;
 
 import com.google.common.collect.Maps;
 import net.kyori.adventure.text.Component;
