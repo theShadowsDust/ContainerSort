@@ -1,34 +1,39 @@
 package de.uniquegame.containersort.service;
 
+import de.uniquegame.containersort.ContainerSortPlugin;
 import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.api.util.SortType;
+import de.uniquegame.containersort.api.SortType;
+import de.uniquegame.containersort.util.MessageUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import net.kyori.adventure.util.UTF8ResourceBundleControl;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.logging.Level;
 
 public class LanguageService {
 
     private final ContainerSortApi containerSortApi;
+    private final File file;
     private final YamlConfiguration config;
+    private final ResourceBundle defaultMessages;
 
     public LanguageService(@NotNull ContainerSortApi containerSortApi) {
+
         this.containerSortApi = containerSortApi;
-        File file = new File(containerSortApi.getPlugin().getDataFolder(), "language.yml");
+        this.defaultMessages = ResourceBundle.getBundle("containersort", new UTF8ResourceBundleControl());
+        this.file = new File(containerSortApi.getPlugin().getDataFolder(), "language.yml");
         if (!file.exists()) {
             containerSortApi.getPlugin().saveResource(file.getName(), false);
         }
 
         this.config = YamlConfiguration.loadConfiguration(file);
+        createLanguage(Locale.getDefault());
     }
 
     public String prefix() {
@@ -40,41 +45,49 @@ public class LanguageService {
 
         String path = String.format("messages.%s.%s", player.locale(), key);
         if (!this.config.isSet(path)) {
-            path = String.format("messages.%s.%s", Locale.ENGLISH, key);
+            return MessageUtil.translateLegacyColorCodes(MessageFormat.format(this.defaultMessages.getString(key), placeholders));
         }
 
-        return translateLegacyColorCodes(MessageFormat.format(
+        return MessageUtil.translateLegacyColorCodes(MessageFormat.format(
                 this.config.getString(path, String.format("N/A (%s)", path)), placeholders));
-    }
-
-    /**
-     * @param text the text
-     * @return the plain text without colors
-     */
-    public String stripColors(@NotNull Component text) {
-        return PlainTextComponentSerializer.plainText().serialize(text);
-    }
-
-    /**
-     * Translates a {@link String} that contains the legacy color codes
-     *
-     * @param text the text to translate
-     * @return the translated {@link Component}
-     */
-    public Component translateLegacyColorCodes(@NotNull String text) {
-        return MiniMessage.miniMessage().deserialize(MiniMessage.miniMessage().
-                serialize(LegacyComponentSerializer.legacyAmpersand().deserialize(text)));
     }
 
     @NotNull
     public List<Component> getSignLayout(@NotNull String playerName, @NotNull SortType sortType) {
         List<Component> layout = new ArrayList<>();
+
+        String sortTypeDisplay = this.config.getString(
+                String.format("messages.sortType-displayNames.%s", sortType.name().toLowerCase()),
+                sortType.getDisplayName());
+
         for (String line : this.containerSortApi.getSettings().getSignLayout()) {
-            layout.add(translateLegacyColorCodes(line.
+            layout.add(MessageUtil.translateLegacyColorCodes(line.
                     replace("%sign_owner_name%", playerName).
-                    replace("%container_sort_type%", sortType.getDisplayName())));
+                    replace("%container_sort_type%",
+                            sortTypeDisplay.length() > 16 ? sortTypeDisplay.substring(0, 16) : sortTypeDisplay)));
+        }
+        return layout;
+    }
+
+    public boolean createLanguage(@NotNull Locale locale) {
+
+        String path = String.format("messages.%s", locale);
+        if (this.config.isSet(path)) {
+            return false;
+        }
+        Iterator<String> iterator = this.defaultMessages.getKeys().asIterator();
+        while (iterator.hasNext()) {
+            String next = iterator.next();
+            this.config.set(String.format(path + ".%s", next), this.defaultMessages.getString(next));
         }
 
-        return layout;
+        try {
+            this.config.save(this.file);
+            return true;
+        } catch (IOException e) {
+            ContainerSortPlugin.getPlugin(ContainerSortPlugin.class).getLogger().log(Level.SEVERE,
+                    "Something went wrong while saving the file", e);
+            return false;
+        }
     }
 }
