@@ -8,7 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public final class ContainerSortPluginConfiguration {
 
@@ -19,6 +21,7 @@ public final class ContainerSortPluginConfiguration {
         this.containerSortApi = containerSortApi;
         loadConfig();
     }
+
 
     @NotNull
     public FileConfiguration getConfig() {
@@ -51,16 +54,31 @@ public final class ContainerSortPluginConfiguration {
         }
 
         this.settings = this.getConfig().getObject("settings", ContainerSortSettings.class);
-        if (this.settings == null) {
+        var defaultSettings = new ContainerSortSettings(
+                Sound.BLOCK_NOTE_BLOCK_PLING,
+                List.of("world_nether", "world_the_end"),
+                List.of("chest", "barrel", "shulker_box"),
+                true,
+                List.of("&f[&9ContainerSort&f]", "&e%sign_owner_name%", "%container_sort_type%", " "), 4);
 
-            this.settings = new ContainerSortSettings(
-                    Sound.BLOCK_NOTE_BLOCK_PLING,
-                    List.of("world_nether", "world_the_end"),
-                    true,
-                    List.of("&f[&6ContainerSort&f]", "%sign_owner_name%", "%container_sort_type%", " "), 4);
 
-            this.getConfig().set("settings", this.settings);
-            this.containerSortApi.getPlugin().saveConfig();
+        Map<String, Object> toAdd = new HashMap<>();
+        for(Map.Entry<String, Object> defaultEntry : defaultSettings.serialize().entrySet()) {
+            for(Map.Entry<String, Object> entry : this.settings.serialize().entrySet()) {
+                if(!defaultEntry.getKey().equalsIgnoreCase(entry.getKey())) {
+                    toAdd.put(defaultEntry.getKey(), defaultEntry.getValue());
+                }
+            }
         }
+
+        if(!toAdd.isEmpty()) {
+            this.getConfig().set("settings", ContainerSortSettings.deserialize(toAdd));
+        }
+
+        if (this.settings == null) {
+            this.getConfig().set("settings", defaultSettings);
+        }
+
+        this.containerSortApi.getPlugin().saveConfig();
     }
 }
