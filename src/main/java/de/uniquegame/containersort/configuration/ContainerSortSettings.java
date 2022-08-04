@@ -9,29 +9,35 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @SerializableAs("settings")
 public class ContainerSortSettings implements ConfigurationSerializable {
 
     private final Sound sortSuccessSound;
-    private List<String> disabledWorlds;
+    private final List<String> disabledWorlds;
+
+    private List<String> allowedContainers;
+
     private final boolean protectSigns;
     private final List<String> signLayout;
     private final int maxSignDistance;
 
     public ContainerSortSettings(@NotNull Sound sortSuccessSound,
                                  @NotNull List<String> disabledWorlds,
+                                 @NotNull List<String> allowedContainers,
                                  boolean protectSigns,
                                  @NotNull List<String> signLayout,
                                  int maxSignDistance) {
 
         this.sortSuccessSound = sortSuccessSound;
         this.disabledWorlds = disabledWorlds;
+        this.allowedContainers = allowedContainers;
         this.protectSigns = protectSigns;
         this.signLayout = signLayout;
         this.maxSignDistance = maxSignDistance;
 
-        if(this.signLayout.size() > 4) {
+        if (this.signLayout.size() > 4) {
             throw new IllegalStateException("The Size of the Layout is greater than 4");
         }
     }
@@ -50,12 +56,18 @@ public class ContainerSortSettings implements ConfigurationSerializable {
         return disabledWorlds;
     }
 
-    public void setDisabledWorlds(List<String> disabledWorlds) {
-        this.disabledWorlds = disabledWorlds;
-    }
-
     public boolean signsProtected() {
         return protectSigns;
+    }
+
+    @NotNull
+    public List<String> getAllowedContainers() {
+        return allowedContainers;
+    }
+
+
+    public void setAllowedContainers(@NotNull List<String> allowedContainers) {
+        this.allowedContainers = allowedContainers;
     }
 
     public boolean isWorldDisabled(@NotNull World world) {
@@ -71,6 +83,7 @@ public class ContainerSortSettings implements ConfigurationSerializable {
         Map<String, Object> map = new HashMap<>();
         map.put("protectSigns", this.protectSigns);
         map.put("disabledWorlds", this.disabledWorlds);
+        map.put("allowedContainers", this.allowedContainers);
         map.put("signLayout", this.signLayout);
         map.put("sortSuccessSound", this.sortSuccessSound.name());
         map.put("maxSignDistance", this.maxSignDistance);
@@ -81,12 +94,16 @@ public class ContainerSortSettings implements ConfigurationSerializable {
 
         boolean protectSigns = (boolean) map.get("protectSigns");
 
-        List<String> disabledWorlds = (List<String>) map.get("disabledWorlds");
-        List<String> signLayout = (List<String>) map.get("signLayout");
-        Sound sortSuccessSound = Sound.valueOf(
-                ((String)map.getOrDefault("sortSuccessSound", "BLOCK_NOTE_BLOCK_PLING")).toUpperCase() );
-        int maxSignDistance = (int) map.get("maxSignDistance");
+        List<String> disabledWorlds = (List<String>) map.getOrDefault("disabledWorlds", List.of());
+        List<String> signLayout = (List<String>) map.getOrDefault("signLayout", List.of());
 
-        return new ContainerSortSettings(sortSuccessSound, disabledWorlds, protectSigns, signLayout, maxSignDistance);
+        Sound sortSuccessSound = Sound.valueOf(
+                ((String) map.getOrDefault("sortSuccessSound", "BLOCK_NOTE_BLOCK_PLING")).toUpperCase());
+
+        List<String> allowedContainerNames = (List<String>) map.getOrDefault("allowedContainers", List.of());
+        List<String> allowedContainers = allowedContainerNames.stream().map(String::toLowerCase).collect(Collectors.toList());
+        int maxSignDistance = (int) map.getOrDefault("maxSignDistance", -1);
+
+        return new ContainerSortSettings(sortSuccessSound, disabledWorlds, allowedContainers, protectSigns, signLayout, maxSignDistance);
     }
 }
