@@ -62,18 +62,22 @@ public final class ContainerSortPluginConfiguration {
                 List.of("&f[&9ContainerSort&f]", "&e%sign_owner_name%", "%container_sort_type%", " "), 4);
 
 
-        Map<String, Object> toAdd = new HashMap<>();
-        for(Map.Entry<String, Object> defaultEntry : defaultSettings.serialize().entrySet()) {
-            for(Map.Entry<String, Object> entry : this.settings.serialize().entrySet()) {
-                if(!defaultEntry.getKey().equalsIgnoreCase(entry.getKey())) {
-                    toAdd.put(defaultEntry.getKey(), defaultEntry.getValue());
+        if (this.settings != null) {
+
+            Map<String, Object> toAdd = new HashMap<>();
+            for (Map.Entry<String, Object> defaultEntry : defaultSettings.serialize().entrySet()) {
+                for (Map.Entry<String, Object> entry : this.settings.serialize().entrySet()) {
+                    if (!defaultEntry.getKey().equalsIgnoreCase(entry.getKey())) {
+                        toAdd.put(defaultEntry.getKey(), defaultEntry.getValue());
+                    }
                 }
+            }
+
+            if (!toAdd.isEmpty()) {
+                this.getConfig().set("settings", ContainerSortSettings.deserialize(toAdd));
             }
         }
 
-        if(!toAdd.isEmpty()) {
-            this.getConfig().set("settings", ContainerSortSettings.deserialize(toAdd));
-        }
 
         if (this.settings == null) {
             this.getConfig().set("settings", defaultSettings);
