@@ -6,7 +6,10 @@ import de.uniquegame.containersort.configuration.ContainerSortSettings;
 import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.service.PersistentDataStoreService;
 import org.bukkit.NamespacedKey;
-import org.bukkit.block.*;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Container;
+import org.bukkit.block.Sign;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
@@ -75,11 +78,6 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     }
 
     @Override
-    public ContainerSortPluginConfiguration getConfiguration() {
-        return this.configuration;
-    }
-
-    @Override
     public ContainerSortSettings getSettings() {
         return this.configuration.getSettings();
     }
@@ -104,6 +102,10 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     @Override
     public boolean isValidContainer(@NotNull BlockState state) {
         if (!(state instanceof Container container)) return false;
-        return container instanceof Chest || container instanceof Barrel || container instanceof DoubleChest;
+
+        InventoryHolder inventoryHolder = container.getInventory().getHolder();
+        if (inventoryHolder == null) return false;
+        return this.getSettings().getAllowedContainers().contains(inventoryHolder.
+                getInventory().getType().name().toLowerCase());
     }
 }
