@@ -27,8 +27,6 @@ public interface ContainerSortApi {
      */
     ContainerSortPlugin getPlugin();
 
-    ContainerSortPluginConfiguration getConfiguration();
-
     PersistentDataStoreService getDataStoreService();
 
     LanguageService getLanguageService();
