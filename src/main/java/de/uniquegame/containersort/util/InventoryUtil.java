@@ -1,5 +1,6 @@
-package de.uniquegame.containersort.api.util;
+package de.uniquegame.containersort.util;
 
+import de.uniquegame.containersort.api.SortType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
