@@ -1,12 +1,16 @@
 package de.uniquegame.containersort.listener;
 
 import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.api.util.SignUtil;
-import de.uniquegame.containersort.api.util.SortType;
+import de.uniquegame.containersort.api.SortType;
 import de.uniquegame.containersort.service.LanguageService;
+import de.uniquegame.containersort.util.MessageUtil;
+import de.uniquegame.containersort.util.Permissions;
+import de.uniquegame.containersort.util.SignUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -30,11 +34,16 @@ public class SignListener implements Listener {
 
     @EventHandler
     public void handleSignBreak(BlockBreakEvent event) {
+
+        if (!this.containerSortApi.getSettings().signsProtected()) return;
+        Player player = event.getPlayer();
         Block block = event.getBlock();
+
         if (block.getState() instanceof Sign sign) {
             if (this.containerSortApi.isSortSign(sign)) {
-                event.setCancelled(!this.containerSortApi.isSignOwner(event.getPlayer().getUniqueId(), sign) &&
-                        !event.getPlayer().hasPermission("containersort.sort.admin"));
+                if (!this.containerSortApi.isSignOwner(player.getUniqueId(), sign)) {
+                    event.setCancelled(!player.hasPermission(Permissions.PERMISSION_SORT_BREAK_OTHERS));
+                }
             }
         }
     }
@@ -48,24 +57,24 @@ public class SignListener implements Listener {
         Component componentLine = event.line(0);
         if (componentLine == null) return;
 
-        String line = this.containerSortApi.getLanguageService().stripColors(componentLine);
+        String line = MessageUtil.stripColors(componentLine);
         String prefix = this.containerSortApi.getLanguageService().prefix();
 
         if (line.equalsIgnoreCase("[containersort]")) {
 
             if (this.containerSortApi.getSettings().isWorldDisabled(event.getBlock().getWorld())) return;
-            if (!player.hasPermission("containersort.create")) return;
+            if (!player.hasPermission(Permissions.PERMISSION_SORT_CREATE)) return;
 
-            if (block.getState() instanceof Sign sign) {
+            BlockState blockState = block.getState();
 
-                if (SignUtil.findConnectedContainer(sign) == null) {
-
+            if (blockState instanceof Sign sign) {
+                Container container = SignUtil.findConnectedContainer(sign);
+                if (container == null && !this.containerSortApi.isValidContainer(blockState)) {
                     SignUtil.breakSign(player, this.languageService.getMessage(
                                     "no-connected-container-found",
                                     player,
                                     prefix),
                             sign);
-
                     return;
                 }
 
@@ -93,12 +102,12 @@ public class SignListener implements Listener {
                     return;
                 }
                 if (!signOwnerId.equals(player.getUniqueId()) &&
-                        !player.hasPermission("containersort.create.others")) {
+                        !player.hasPermission(Permissions.PERMISSION_SORT_CREATE_OTHERS)) {
                     signOwnerId = player.getUniqueId();
                 }
 
-                List<Component> signLayout = this.containerSortApi.getLanguageService().
-                        getSignLayout(playerName, sortType);
+                List<Component> signLayout = this.containerSortApi.
+                        getLanguageService().getSignLayout(playerName, sortType);
 
                 for (int i = 0; i < signLayout.size(); i++) {
                     event.line(i, signLayout.get(i));
