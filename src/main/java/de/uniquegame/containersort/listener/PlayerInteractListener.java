@@ -1,9 +1,10 @@
 package de.uniquegame.containersort.listener;
 
 import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.api.util.InventoryUtil;
-import de.uniquegame.containersort.api.util.SignUtil;
-import de.uniquegame.containersort.api.util.SortType;
+import de.uniquegame.containersort.util.InventoryUtil;
+import de.uniquegame.containersort.util.Permissions;
+import de.uniquegame.containersort.util.SignUtil;
+import de.uniquegame.containersort.api.SortType;
 import de.uniquegame.containersort.service.LanguageService;
 import org.bukkit.block.Sign;
 import org.bukkit.event.Event;
@@ -38,7 +39,7 @@ public final class PlayerInteractListener implements Listener {
             var prefix = this.containerSortApi.getLanguageService().prefix();
 
             var container = SignUtil.findConnectedContainer(sign);
-            if (container == null) {
+            if (container == null || !this.containerSortApi.isValidContainer(container.getBlock().getState())) {
 
                 SignUtil.breakSign(player, this.languageService.getMessage(
                         "no-connected-container-found",
@@ -48,13 +49,11 @@ public final class PlayerInteractListener implements Listener {
                 return;
             }
 
-            if (!this.containerSortApi.isValidContainer(container)) return;
-
-            if (!player.hasPermission("container.sort.allow")) return;
+            if (!player.hasPermission(Permissions.PERMISSION_SORT_ALLOW)) return;
             if (this.containerSortApi.getSettings().isWorldDisabled(clickedBlock.getWorld())) return;
 
             if (!this.containerSortApi.isSignOwner(player.getUniqueId(), sign) &&
-                    !player.hasPermission("containersort.sort.admin")) {
+                    !player.hasPermission(Permissions.PERMISSION_SORT_ALLOW_OTHERS)) {
 
                 player.sendMessage(this.containerSortApi.getLanguageService().getMessage(
                         "invalid-sign-owner", player,
