@@ -1,8 +1,7 @@
-package de.uniquegame.containersort.api.util;
+package de.uniquegame.containersort.util;
 
 import de.uniquegame.containersort.api.ContainerSortApiImpl;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -19,7 +18,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-public class SignUtil {
+public final class SignUtil {
 
     @Nullable
     public static UUID findPlayerId(@NotNull Sign sign) {
@@ -27,7 +26,7 @@ public class SignUtil {
         CompletableFuture<UUID> future = CompletableFuture.supplyAsync(() -> {
             UUID playerId = null;
             for (int i = 0; i < sign.lines().size() && playerId == null; i++) {
-                var uuid = Bukkit.getPlayerUniqueId(PlainTextComponentSerializer.plainText().serialize(sign.line(i)));
+                var uuid = Bukkit.getPlayerUniqueId(MessageUtil.stripColors(sign.line(i)));
                 if (uuid == null) continue;
                 playerId = uuid;
             }
@@ -71,7 +70,7 @@ public class SignUtil {
             String playerName = null;
             for (int i = 0; i < lines.size() && playerName == null; i++) {
 
-                var line = PlainTextComponentSerializer.plainText().serialize(lines.get(i));
+                var line = MessageUtil.stripColors(lines.get(i));
 
                 if (line.isEmpty()) continue;
 
@@ -90,9 +89,9 @@ public class SignUtil {
 
         try {
             return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+        } catch (InterruptedException | ExecutionException ignored) {
             return null;
         }
     }
+
 }
