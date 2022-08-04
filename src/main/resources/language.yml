@@ -1,36 +1,18 @@
 
-# You can get the language code with the following command: /containersort language
-# You can add more languages with this format.
-# messages:
-#   <language_code_here>:
-#     cannot-find-sort-type: '{0} &cThe Sort type cannot be found.'
-#     client-language-code: '{0} &7Your Language Code: &6{1}'
-#     sign-successfully-created: '{0} &7You have &asuccessfully &7created the Sign.'
-#     no-sign-in-line-of-sight: '{0} &cCannot find a sign in your line of sight'
-#     invalid-sign: "{0} &cThis sign is not valid"
-#     invalid-sign-owner: '{0} &cYou are not the Owner of this sign'
-#     invalid-player-name: '{0} &cYou are not permitted to created sort signs for other players'
-#     cannot-find-username: '{0} &cThe player name cannot be found.'
+# You can add more languages with the following command: /containersort add language.
 
 messages:
   prefix: '&f[&6ContainerSort&f]'
-  en_US:
-    cannot-find-sort-type: '{0} &cThe Sort type cannot be found.'
-    client-language-code: '{0} &7Your Language Code: &6{1}'
-    sign-successfully-created: '{0} &7You have &asuccessfully &7created the Sign.'
-    no-sign-in-line-of-sight: '{0} &cCannot find a sign in your line of sight'
-    invalid-sign: "{0} &cThis sign is not valid"
-    invalid-sign-owner: '{0} &cYou are not the Owner of this sign'
-    invalid-player-name: '{0} &cYou are not permitted to created sort signs for other players'
-    no-connected-container-found: '{0} &cCould not find an connected container'
-    cannot-find-username: '{0} &cThe player name cannot be found.'
+  sortType-displayNames:
+    alphabetically: '&aAlphabetically'
+    highest_item_amount: '&cHighest Amount'
+    lowest_item_amount: '&2Lowest Amount'
   de_DE:
-    cannot-find-sort-type: '{0} &cDer Sort typ konnte nicht gefunden werden.'
-    client-language-code: '{0} &7Dein Language Code: &6{1}'
-    sign-successfully-created: '{0} &7Du hast &aerfolgreich &7das Schild &7erstellt.'
-    no-sign-in-line-of-sight: '{0} &cEs konnte kein Schild in deiner Blickrichtung gefunden werden.'
-    invalid-sign: "{0} &cDu kannst dieses Schild nicht bearbeiten."
-    invalid-sign-owner: '{0} &cDu bist nicht der Besitzer von diesem Schild'
-    invalid-player-name: '{0} &cDu darfst keine Sortierschilder für andere Spieler erstellen'
-    no-connected-container-found: '{0} &cEs konnte kein Container gefunden werden.'
     cannot-find-username: '{0} &cDer Spielername konnte nicht gefunden werden.'
+    no-sign-in-line-of-sight: '{0} &cEs konnte kein Schild in deiner Blickrichtung gefunden werden.'
+    language-successfully-created: '{0} &7Die Sprache &e{1} wurde &aerfolgreich &7erstellt.'
+    invalid-sign-owner: '{0} &cDu bist nicht der Besitzer von diesem Schild'
+    no-connected-container-found: '{0} &cEs konnte kein Container gefunden werden.'
+    cannot-find-sort-type: '{0} &cDer Sort typ konnte nicht gefunden werden.'
+    invalid-sign: '{0} &cDu kannst dieses Schild nicht bearbeiten.'
+    sign-successfully-created: '{0} &7Du hast &aerfolgreich &7das Schild &7erstellt.'
