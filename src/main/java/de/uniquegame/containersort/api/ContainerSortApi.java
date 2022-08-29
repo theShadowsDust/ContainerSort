@@ -1,20 +1,20 @@
 package de.uniquegame.containersort.api;
 
 import de.uniquegame.containersort.ContainerSortPlugin;
-import de.uniquegame.containersort.configuration.ContainerSortPluginConfiguration;
 import de.uniquegame.containersort.configuration.ContainerSortSettings;
 import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.service.PersistentDataStoreService;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
+import org.bukkit.event.block.SignChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
 public interface ContainerSortApi {
 
-    boolean isSortSign(Sign sign);
+    boolean isSortSign(@NotNull Sign sign);
 
     /**
      * @param playerId the player who interacts with the attached {@link org.bukkit.block.Sign}
@@ -33,7 +33,10 @@ public interface ContainerSortApi {
 
     ContainerSortSettings getSettings();
 
-    void saveSignData(@NotNull UUID playerId, @NotNull Sign sign);
+    void saveSignData(@NotNull UUID playerId,
+                      @NotNull String playerName,
+                      @NotNull SortType sortType,
+                      @NotNull SignChangeEvent event);
 
     boolean isValidContainer(@NotNull BlockState state);
 }
