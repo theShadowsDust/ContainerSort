@@ -16,13 +16,13 @@ You will receive a .jar file. You have to put the file into your plugins folder.
 - Rewrite this section later
 
 
-| Permission                   | Description                                   |
-|------------------------------|-----------------------------------------------|
-| container.sort.allow         | Allows to sort Containers                     |
-| container.sort.allow.others  | Allows to sort Containers from another player |
-| container.sort.create        | Allows to create Sort signs                   |
-| container.sort.create.others | Allows to sort Containers from another player |             
-| container.sort.break.others  | Allows to break the sign from another player  |
+| Permission                  | Description                                   |
+|-----------------------------|-----------------------------------------------|
+| containersort.allow         | Allows to sort containers                     |
+| containersort.allow.others  | Allows to sort containers from another player |
+| containersort.create        | Allows to create sort signs                   |
+| containersort.create.others | Allows to create sort sign for another player |             
+| containersort.break.others  | Allows to break the sign from another player  |
 
 **Download:**  
 - Coming Soon
