@@ -5,15 +5,18 @@ import de.uniquegame.containersort.configuration.ContainerSortPluginConfiguratio
 import de.uniquegame.containersort.configuration.ContainerSortSettings;
 import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.service.PersistentDataStoreService;
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -34,15 +37,15 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     }
 
     @Override
-    public boolean isSortSign(Sign sign) {
+    public boolean isSortSign(@NotNull Sign sign) {
 
-        PersistentDataContainer container = sign.getPersistentDataContainer();
         NamespacedKey sortSign = this.persistentDataStoreService.getNameSpacedKey(PersistentDataStoreService.SORT_SIGN);
-
         if (sortSign == null) return false;
-        if (!container.has(sortSign)) return false;
 
-        Byte signValue = container.get(sortSign, PersistentDataType.BYTE);
+        PersistentDataContainer dataContainer = sign.getPersistentDataContainer();
+        if (!dataContainer.has(sortSign)) return false;
+
+        Byte signValue = dataContainer.get(sortSign, PersistentDataType.BYTE);
         return signValue != null && signValue == 1;
     }
 
@@ -83,7 +86,12 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     }
 
     @Override
-    public void saveSignData(@NotNull UUID playerId, @NotNull Sign sign) {
+    public void saveSignData(@NotNull UUID playerId,
+                             @NotNull String playerName,
+                             @NotNull SortType sortType,
+                             @NotNull SignChangeEvent event) {
+
+        Sign sign = (Sign) event.getBlock().getState();
 
         this.getDataStoreService().applyPersistentData(
                 sign,
@@ -97,6 +105,11 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
                 (byte) 1);
 
         sign.update();
+
+        List<Component> signLayout = this.getLanguageService().getSignLayout(playerName, sortType);
+        for (int i = 0; i < signLayout.size(); i++) {
+            event.line(i, signLayout.get(i));
+        }
     }
 
     @Override
