@@ -12,9 +12,13 @@ import java.util.List;
 
 public final class InventoryUtil {
 
-    private final static Comparator<ItemStack> SORT_ALPHABETICALLY = Comparator.comparing(itemStack -> itemStack.getType().name());
-    private final static Comparator<ItemStack> SORT_BY_LOWEST_AMOUNT = Comparator.comparing(ItemStack::getAmount);
-    private final static Comparator<ItemStack> SORT_BY_HIGHEST_AMOUNT = SORT_BY_LOWEST_AMOUNT.reversed();
+    private static final Comparator<ItemStack> SORT_ALPHABETICALLY = Comparator.comparing(itemStack -> itemStack.getType().name());
+    private static final Comparator<ItemStack> SORT_BY_LOWEST_AMOUNT = Comparator.comparing(ItemStack::getAmount);
+    private static final Comparator<ItemStack> SORT_BY_HIGHEST_AMOUNT = SORT_BY_LOWEST_AMOUNT.reversed();
+
+    private InventoryUtil() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static void sortContainer(@NotNull SortType sortType, @NotNull Inventory inventory) {
 
@@ -50,13 +54,10 @@ public final class InventoryUtil {
 
         List<ItemStack> itemList = new LinkedList<>();
 
-        Iterating:
         for (ItemStack item : items) {
             for (ItemStack iStack : itemList) {
-                if (iStack.getAmount() == iStack.getMaxStackSize()) continue;
-                if (item.isSimilar(iStack)) {
+                if (iStack.getAmount() != iStack.getMaxStackSize() && item.isSimilar(iStack)) {
                     iStack.setAmount(iStack.getAmount() + item.getAmount());
-                    continue Iterating;
                 }
             }
 
