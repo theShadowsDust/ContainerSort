@@ -5,6 +5,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class MessageUtil {
 
@@ -27,8 +28,8 @@ public final class MessageUtil {
      * @param text the text to remove the colors
      * @return the plain text without colors
      */
-    public static String stripColors(@NotNull Component text) {
-        return PlainTextComponentSerializer.plainText().serialize(text);
+    public static String stripColors(@Nullable Component text) {
+        return PlainTextComponentSerializer.plainText().serialize(text != null ? text : Component.text(""));
     }
 
     /**
