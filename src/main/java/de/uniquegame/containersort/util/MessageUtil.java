@@ -7,6 +7,11 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
 public final class MessageUtil {
+
+    private MessageUtil() {
+        throw new IllegalStateException("Utility class");
+    }
+
     /**
      * Translates a {@link String} that contains the legacy color codes
      *
