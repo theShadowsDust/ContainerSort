@@ -24,6 +24,7 @@ public final class PlayerInteractListener implements Listener {
     }
 
     @EventHandler
+    @SuppressWarnings("java:S3776")
     public void handlePlayerInteract(PlayerInteractEvent event) {
 
         if (!event.getAction().isRightClick()) return;
@@ -36,16 +37,11 @@ public final class PlayerInteractListener implements Listener {
         if (clickedBlock.getState() instanceof Sign sign) {
 
             if (!this.containerSortApi.isSortSign(sign)) return;
-            var prefix = this.containerSortApi.getLanguageService().prefix();
+            var pluginPrefix = this.languageService.pluginPrefix();
 
             var container = SignUtil.findConnectedContainer(sign);
             if (container == null || !this.containerSortApi.isValidContainer(container.getBlock().getState())) {
-
-                SignUtil.breakSign(player, this.languageService.getMessage(
-                        "no-connected-container-found",
-                        player, prefix),
-                        sign);
-
+                player.sendMessage(this.languageService.getMessage("no-connected-container-found", player, pluginPrefix));
                 return;
             }
 
@@ -55,23 +51,18 @@ public final class PlayerInteractListener implements Listener {
             if (!this.containerSortApi.isSignOwner(player.getUniqueId(), sign) &&
                     !player.hasPermission(Permissions.PERMISSION_SORT_ALLOW_OTHERS)) {
 
-                player.sendMessage(this.containerSortApi.getLanguageService().getMessage(
-                        "invalid-sign-owner", player,
-                        this.containerSortApi.getLanguageService().prefix()));
+                player.sendMessage(this.languageService.getMessage("invalid-sign-owner", player, pluginPrefix));
                 return;
             }
 
             var sortType = SortType.findSortType(sign.lines());
             if (sortType == null) {
-                player.sendMessage(this.containerSortApi.getLanguageService().getMessage(
-                        "cannot-find-sort-type",
-                        player, this.containerSortApi.getLanguageService().prefix()));
+                player.sendMessage(this.languageService.getMessage("cannot-find-sort-type", player, pluginPrefix));
                 return;
             }
 
             InventoryUtil.sortContainer(sortType, container.getInventory());
-            player.playSound(player.getLocation(),
-                    this.containerSortApi.getSettings().getSortSuccessSound(), 1F, 1F);
+            player.playSound(player.getLocation(), this.containerSortApi.getSettings().getSortSuccessSound(), 1F, 1F);
         }
     }
 }
