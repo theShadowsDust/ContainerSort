@@ -5,15 +5,13 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public final class ContainerSortPluginConfiguration {
 
+    private static final String SETTINGS_KEY = "settings";
     private final ContainerSortApi containerSortApi;
     private ContainerSortSettings settings;
 
@@ -35,31 +33,16 @@ public final class ContainerSortPluginConfiguration {
 
     public void loadConfig() {
 
-        File dataFolder = this.containerSortApi.getPlugin().getDataFolder();
-        if (!dataFolder.exists()) {
-            try {
-                Files.createDirectory(dataFolder.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        File file = new File(dataFolder, "config.yml");
-        if (!file.exists()) {
-            try {
-                Files.createFile(file.toPath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        this.settings = this.getConfig().getObject("settings", ContainerSortSettings.class);
+        this.settings = this.getConfig().getObject(SETTINGS_KEY, ContainerSortSettings.class);
         var defaultSettings = new ContainerSortSettings(
                 Sound.BLOCK_NOTE_BLOCK_PLING,
                 List.of("world_nether", "world_the_end"),
                 List.of("chest", "barrel", "shulker_box"),
+                "[containersort]",
                 true,
-                List.of("&f[&9ContainerSort&f]", "&e%sign_owner_name%", "%container_sort_type%", " "), 4);
+                true,
+                true,
+                List.of("&f[&6ContainerSort&f]", "&e%sign_owner_name%", "%container_sort_type%", " "), 4);
 
 
         if (this.settings != null) {
@@ -74,13 +57,13 @@ public final class ContainerSortPluginConfiguration {
             }
 
             if (!toAdd.isEmpty()) {
-                this.getConfig().set("settings", ContainerSortSettings.deserialize(toAdd));
+                this.getConfig().set(SETTINGS_KEY, ContainerSortSettings.deserialize(toAdd));
             }
         }
 
 
         if (this.settings == null) {
-            this.getConfig().set("settings", defaultSettings);
+            this.getConfig().set(SETTINGS_KEY, defaultSettings);
         }
 
         this.containerSortApi.getPlugin().saveConfig();
