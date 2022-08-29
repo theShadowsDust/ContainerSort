@@ -39,6 +39,7 @@ public class ContainerSortPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        saveDefaultConfig();
         ConfigurationSerialization.registerClass(ContainerSortSettings.class);
         PluginManager pluginManager = getServer().getPluginManager();
 
