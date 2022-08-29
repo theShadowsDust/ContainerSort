@@ -47,10 +47,19 @@ tasks {
 
 bukkit {
     main = "${rootProject.group}.containersort.ContainerSortPlugin"
-    apiVersion = "1.18"
+    apiVersion = "1.19"
     name = "ContainerSort"
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.POSTWORLD
     author = "UniqueGame"
+    permissions {
+        register("containersort.allow")
+        register("containersort.allow.others")
+
+        register("containersort.create")
+        register("containersort.create.others")
+
+        register("containersort.break.others")
+    }
 }
 
 changelog {
