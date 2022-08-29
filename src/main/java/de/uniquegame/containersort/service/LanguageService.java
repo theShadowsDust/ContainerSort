@@ -1,6 +1,5 @@
 package de.uniquegame.containersort.service;
 
-import de.uniquegame.containersort.ContainerSortPlugin;
 import de.uniquegame.containersort.api.ContainerSortApi;
 import de.uniquegame.containersort.api.SortType;
 import de.uniquegame.containersort.util.MessageUtil;
@@ -33,10 +32,10 @@ public class LanguageService {
         }
 
         this.config = YamlConfiguration.loadConfiguration(file);
-        createLanguage(Locale.getDefault());
+        createLanguage(Locale.US);
     }
 
-    public String prefix() {
+    public String pluginPrefix() {
         return this.config.getString("messages.prefix");
     }
 
@@ -71,21 +70,22 @@ public class LanguageService {
 
     public boolean createLanguage(@NotNull Locale locale) {
 
-        String path = String.format("messages.%s", locale);
+        String path = "messages.%s.%s";
         if (this.config.isSet(path)) {
             return false;
         }
+
         Iterator<String> iterator = this.defaultMessages.getKeys().asIterator();
         while (iterator.hasNext()) {
             String next = iterator.next();
-            this.config.set(String.format(path + ".%s", next), this.defaultMessages.getString(next));
+            this.config.set(String.format(path, locale, next), this.defaultMessages.getString(next));
         }
 
         try {
             this.config.save(this.file);
             return true;
         } catch (IOException e) {
-            ContainerSortPlugin.getPlugin(ContainerSortPlugin.class).getLogger().log(Level.SEVERE,
+            this.containerSortApi.getPlugin().getLogger().log(Level.SEVERE,
                     "Something went wrong while saving the file", e);
             return false;
         }
