@@ -4,9 +4,9 @@
 messages:
   prefix: '&f[&6ContainerSort&f]'
   sortType-displayNames:
-    alphabetically: '&aAlphabetically'
-    highest_item_amount: '&cHighest Amount'
-    lowest_item_amount: '&2Lowest Amount'
+    alphabetically: '&9Alphabetically'
+    highest_item_amount: '&9Highest Amount'
+    lowest_item_amount: '&9Lowest Amount'
   de_DE:
     cannot-find-username: '{0} &cDer Spielername konnte nicht gefunden werden.'
     no-sign-in-line-of-sight: '{0} &cEs konnte kein Schild in deiner Blickrichtung gefunden werden.'
