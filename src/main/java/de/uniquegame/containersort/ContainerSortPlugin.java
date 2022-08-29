@@ -11,6 +11,7 @@ import de.uniquegame.containersort.api.ContainerSortApi;
 import de.uniquegame.containersort.api.ContainerSortApiImpl;
 import de.uniquegame.containersort.command.ContainerSortCommand;
 import de.uniquegame.containersort.configuration.ContainerSortSettings;
+import de.uniquegame.containersort.listener.ContainerProtectionListener;
 import de.uniquegame.containersort.listener.PlayerInteractListener;
 import de.uniquegame.containersort.listener.SignListener;
 import org.bukkit.command.CommandSender;
@@ -50,6 +51,7 @@ public class ContainerSortPlugin extends JavaPlugin {
 
 
         pluginManager.registerEvents(new PlayerInteractListener(this.containerSortApi), this);
+        pluginManager.registerEvents(new ContainerProtectionListener(this.containerSortApi), this);
         pluginManager.registerEvents(new SignListener(this.containerSortApi), this);
         buildCommandSystem();
     }
