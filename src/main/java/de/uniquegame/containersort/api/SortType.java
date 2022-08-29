@@ -15,8 +15,8 @@ public enum SortType {
     HIGHEST_ITEM_AMOUNT("Highest Amount", "highest"),
     LOWEST_ITEM_AMOUNT("Lowest Amount", "lowest");
 
-    public static final SortType[] VALUES = values();
-    public static final Map<String, SortType> BY_NAME = Maps.newHashMap();
+    private static final SortType[] VALUES = values();
+    private static final Map<String, SortType> BY_NAME = Maps.newHashMap();
 
     private final String displayName;
     private final String shortName;
