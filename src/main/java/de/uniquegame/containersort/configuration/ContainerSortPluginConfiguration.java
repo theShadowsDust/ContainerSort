@@ -33,7 +33,6 @@ public final class ContainerSortPluginConfiguration {
 
     public void loadConfig() {
 
-        this.settings = this.getConfig().getObject(SETTINGS_KEY, ContainerSortSettings.class);
         var defaultSettings = new ContainerSortSettings(
                 Sound.BLOCK_NOTE_BLOCK_PLING,
                 List.of("world_nether", "world_the_end"),
@@ -44,28 +43,30 @@ public final class ContainerSortPluginConfiguration {
                 true,
                 List.of("&f[&6ContainerSort&f]", "&e%sign_owner_name%", "%container_sort_type%", " "), 4);
 
+        this.settings = this.getConfig().getObject(SETTINGS_KEY, ContainerSortSettings.class, defaultSettings);
 
-        if (this.settings != null) {
-
-            Map<String, Object> toAdd = new HashMap<>();
-            for (Map.Entry<String, Object> defaultEntry : defaultSettings.serialize().entrySet()) {
-                for (Map.Entry<String, Object> entry : this.settings.serialize().entrySet()) {
-                    if (!defaultEntry.getKey().equalsIgnoreCase(entry.getKey())) {
-                        toAdd.put(defaultEntry.getKey(), defaultEntry.getValue());
-                    }
-                }
-            }
-
-            if (!toAdd.isEmpty()) {
-                this.getConfig().set(SETTINGS_KEY, ContainerSortSettings.deserialize(toAdd));
-            }
-        }
-
-
-        if (this.settings == null) {
+        if (this.settings.equals(defaultSettings)) {
+            updateConfig(defaultSettings);
+        } else {
             this.getConfig().set(SETTINGS_KEY, defaultSettings);
+            this.settings = defaultSettings;
         }
 
         this.containerSortApi.getPlugin().saveConfig();
+    }
+
+    private void updateConfig(@NotNull ContainerSortSettings defaultSettings) {
+        Map<String, Object> toAdd = new HashMap<>();
+        for (Map.Entry<String, Object> defaultEntry : defaultSettings.serialize().entrySet()) {
+            for (Map.Entry<String, Object> entry : this.settings.serialize().entrySet()) {
+                if (!defaultEntry.getKey().equalsIgnoreCase(entry.getKey())) {
+                    toAdd.put(defaultEntry.getKey(), defaultEntry.getValue());
+                }
+            }
+        }
+
+        if (!toAdd.isEmpty()) {
+            this.getConfig().set(SETTINGS_KEY, ContainerSortSettings.deserialize(toAdd));
+        }
     }
 }
