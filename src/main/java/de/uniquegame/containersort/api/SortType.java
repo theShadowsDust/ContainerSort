@@ -1,8 +1,8 @@
 package de.uniquegame.containersort.api;
 
 import com.google.common.collect.Maps;
+import de.uniquegame.containersort.util.MessageUtil;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -66,7 +66,7 @@ public enum SortType {
 
         SortType sortType = null;
         for (int i = 0; i < lines.size() && sortType == null; i++) {
-            String text = PlainTextComponentSerializer.plainText().serialize(lines.get(i));
+            String text = MessageUtil.stripColors(lines.get(i));
             sortType = findByDisplayName(text);
             if (sortType == null) {
                 sortType = findByShortName(text);
