@@ -1,11 +1,12 @@
 package de.uniquegame.containersort.listener;
 
 import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.util.InventoryUtil;
+import de.uniquegame.containersort.api.SortType;
+import de.uniquegame.containersort.configuration.ContainerSortProperty;
+import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.util.Permissions;
 import de.uniquegame.containersort.util.SignUtil;
-import de.uniquegame.containersort.api.SortType;
-import de.uniquegame.containersort.service.LanguageService;
+import org.bukkit.Sound;
 import org.bukkit.block.Sign;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -46,7 +47,7 @@ public final class PlayerInteractListener implements Listener {
             }
 
             if (!player.hasPermission(Permissions.PERMISSION_SORT_ALLOW)) return;
-            if (this.containerSortApi.getSettings().isWorldDisabled(clickedBlock.getWorld())) return;
+            if (this.containerSortApi.getConfiguration().isWorldDisabled(clickedBlock.getWorld())) return;
 
             if (!this.containerSortApi.isSignOwner(player.getUniqueId(), sign) &&
                     !player.hasPermission(Permissions.PERMISSION_SORT_ALLOW_OTHERS)) {
@@ -61,8 +62,11 @@ public final class PlayerInteractListener implements Listener {
                 return;
             }
 
-            InventoryUtil.sortContainer(sortType, container.getInventory());
-            player.playSound(player.getLocation(), this.containerSortApi.getSettings().getSortSuccessSound(), 1F, 1F);
+            this.containerSortApi.sortContainer(sortType, container.getInventory());
+            player.playSound(
+                    player.getLocation(),
+                    Sound.valueOf(this.containerSortApi.getPropertyValue(ContainerSortProperty.SORT_SUCCESS_SOUND, String.class)),
+                    1F, 1F);
         }
     }
 }

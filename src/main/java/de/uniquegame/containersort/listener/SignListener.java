@@ -2,6 +2,7 @@ package de.uniquegame.containersort.listener;
 
 import de.uniquegame.containersort.api.ContainerSortApi;
 import de.uniquegame.containersort.api.SortType;
+import de.uniquegame.containersort.configuration.ContainerSortProperty;
 import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.util.MessageUtil;
 import de.uniquegame.containersort.util.Permissions;
@@ -19,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class SignListener implements Listener {
+public final class SignListener implements Listener {
 
     private final ContainerSortApi containerSortApi;
     private final LanguageService languageService;
@@ -40,8 +41,8 @@ public class SignListener implements Listener {
         if (!player.hasPermission(Permissions.PERMISSION_SORT_CREATE)) return;
 
         String line = MessageUtil.stripColors(event.line(0));
-        if (!line.equalsIgnoreCase(this.containerSortApi.getSettings().getSignIdentifier())) return;
-        if (this.containerSortApi.getSettings().isWorldDisabled(event.getBlock().getWorld())) return;
+        if (!line.equalsIgnoreCase(this.containerSortApi.getPropertyValue(ContainerSortProperty.SIGN_IDENTIFIER, String.class))) return;
+        if (this.containerSortApi.getConfiguration().isWorldDisabled(event.getBlock().getWorld())) return;
         BlockState blockState = block.getState();
 
         if (blockState instanceof Sign sign) {
