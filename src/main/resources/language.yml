@@ -1,0 +1,18 @@
+
+# You can add more languages with the following command: /containersort add language.
+
+messages:
+  prefix: '&f[&6ContainerSort&f]'
+  sortType-displayNames:
+    alphabetically: '&9Alphabetically'
+    highest_item_amount: '&9Highest Amount'
+    lowest_item_amount: '&9Lowest Amount'
+  de_DE:
+    cannot-find-username: '{0} &cDer Spielername konnte nicht gefunden werden.'
+    no-sign-in-line-of-sight: '{0} &cEs konnte kein Schild in deiner Blickrichtung gefunden werden.'
+    language-successfully-created: '{0} &7Die Sprache &e{1} wurde &aerfolgreich &7erstellt.'
+    invalid-sign-owner: '{0} &cDu bist nicht der Besitzer von diesem Schild'
+    no-connected-container-found: '{0} &cEs konnte kein Container gefunden werden.'
+    cannot-find-sort-type: '{0} &cDer Sort typ konnte nicht gefunden werden.'
+    invalid-sign: '{0} &cDu kannst dieses Schild nicht bearbeiten.'
+    sign-successfully-created: '{0} &7Du hast &aerfolgreich &7das Schild &7erstellt.'
