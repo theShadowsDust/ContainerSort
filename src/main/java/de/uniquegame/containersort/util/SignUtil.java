@@ -3,7 +3,10 @@ package de.uniquegame.containersort.util;
 import de.uniquegame.containersort.api.ContainerSortApiImpl;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.block.*;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.block.Container;
+import org.bukkit.block.Sign;
 import org.bukkit.block.data.type.WallSign;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -15,15 +18,7 @@ import java.util.logging.Level;
 
 public final class SignUtil {
 
-    private static final BlockFace[] DOUBLE_CHEST_FACES = {
-            BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST,
-            BlockFace.EAST, BlockFace.SOUTH, BlockFace.SOUTH_WEST,
-            BlockFace.WEST};
-
-    private static final BlockFace[] BLOCK_FACES = {
-            BlockFace.NORTH, BlockFace.NORTH_EAST, BlockFace.NORTH_WEST,
-            BlockFace.EAST, BlockFace.SOUTH, BlockFace.SOUTH_WEST,
-            BlockFace.WEST};
+    private static final BlockFace[] BLOCK_FACES = BlockFace.values();
 
     private SignUtil() {
         throw new IllegalStateException("Utility class");
@@ -34,11 +29,8 @@ public final class SignUtil {
 
         Sign sign = null;
         Block block = container.getBlock();
-
-        boolean doubleChest = container.getInventory().getHolder() instanceof DoubleChest;
-        BlockFace[] faces = doubleChest ? DOUBLE_CHEST_FACES : BLOCK_FACES;
-        for (int i = 0; i < faces.length && sign == null; i++) {
-            var currentBlock = block.getRelative(faces[i]);
+        for (int i = 0; i < BLOCK_FACES.length && sign == null; i++) {
+            var currentBlock = block.getRelative(BLOCK_FACES[i]);
             if (currentBlock.getState() instanceof Sign wallSign) {
                 sign = wallSign;
             }
