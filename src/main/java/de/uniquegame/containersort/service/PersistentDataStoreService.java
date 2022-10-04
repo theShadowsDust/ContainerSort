@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class PersistentDataStoreService {
+public final class PersistentDataStoreService {
 
     public static final String SORT_SIGN_OWNER = "sign_owner";
     public static final String SORT_SIGN = "sort_sign";
