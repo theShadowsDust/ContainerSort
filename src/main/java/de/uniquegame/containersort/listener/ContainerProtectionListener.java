@@ -1,6 +1,7 @@
 package de.uniquegame.containersort.listener;
 
 import de.uniquegame.containersort.api.ContainerSortApi;
+import de.uniquegame.containersort.configuration.ContainerSortProperty;
 import de.uniquegame.containersort.util.Permissions;
 import de.uniquegame.containersort.util.SignUtil;
 import org.bukkit.block.Block;
@@ -18,7 +19,7 @@ import org.bukkit.inventory.InventoryHolder;
 
 import java.util.Map;
 
-public class ContainerProtectionListener implements Listener {
+public final class ContainerProtectionListener implements Listener {
 
     private final ContainerSortApi api;
 
@@ -32,7 +33,8 @@ public class ContainerProtectionListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        if (this.api.getSettings().isProtectContainers() && block.getState() instanceof Container container) {
+        if (this.api.getPropertyValue(ContainerSortProperty.PROTECT_CONTAINERS, Boolean.class) &&
+                block.getState() instanceof Container container) {
             Map<Container, Sign> map = findSignAndContainer(container.getInventory().getHolder());
             if (!map.isEmpty()) {
                 Sign connectedSign = map.get(container);
@@ -48,7 +50,7 @@ public class ContainerProtectionListener implements Listener {
 
         Player player = event.getPlayer();
         Block block = event.getBlock();
-        event.setCancelled(this.api.getSettings().isProtectSigns() &&
+        event.setCancelled(this.api.getPropertyValue(ContainerSortProperty.PROTECT_SIGNS, Boolean.class) &&
                 !player.hasPermission(Permissions.PERMISSION_SORT_BREAK_OTHERS)
                 && block.getState() instanceof Sign sign &&
                 this.api.isSortSign(sign)
@@ -58,7 +60,7 @@ public class ContainerProtectionListener implements Listener {
     @EventHandler
     public void onInventoryMoveItem(InventoryMoveItemEvent event) {
 
-        if (!this.api.getSettings().isItemTransferBlocked()) return;
+        if (Boolean.FALSE.equals(this.api.getPropertyValue(ContainerSortProperty.ITEM_TRANSFER_BLOCKED, Boolean.class))) return;
         Inventory destination = event.getDestination();
         boolean cancel = false;
 
