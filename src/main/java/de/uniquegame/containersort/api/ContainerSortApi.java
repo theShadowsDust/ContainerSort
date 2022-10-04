@@ -1,15 +1,18 @@
 package de.uniquegame.containersort.api;
 
 import de.uniquegame.containersort.ContainerSortPlugin;
-import de.uniquegame.containersort.configuration.ContainerSortSettings;
+import de.uniquegame.containersort.configuration.ContainerSortConfiguration;
+import de.uniquegame.containersort.configuration.ContainerSortProperty;
 import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.service.PersistentDataStoreService;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public interface ContainerSortApi {
@@ -31,7 +34,11 @@ public interface ContainerSortApi {
 
     LanguageService getLanguageService();
 
-    ContainerSortSettings getSettings();
+    ContainerSortConfiguration getConfiguration();
+
+    void reloadConfig() throws IOException;
+
+    <T> T getPropertyValue(@NotNull ContainerSortProperty<T> property, @NotNull Class<T> target);
 
     void saveSignData(@NotNull UUID playerId,
                       @NotNull String playerName,
@@ -39,4 +46,7 @@ public interface ContainerSortApi {
                       @NotNull SignChangeEvent event);
 
     boolean isValidContainer(@NotNull BlockState state);
+
+
+    void sortContainer(@NotNull SortType sortType, @NotNull Inventory inventory);
 }
