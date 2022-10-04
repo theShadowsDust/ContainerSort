@@ -21,7 +21,8 @@ dependencies {
     implementation("cloud.commandframework", "cloud-paper", "1.7.0")
     implementation("cloud.commandframework", "cloud-annotations", "1.7.0")
     implementation("cloud.commandframework", "cloud-minecraft-extras", "1.7.0")
-    implementation("me.lucko:commodore:2.0") {
+    implementation("org.apache.commons:commons-lang3:3.0")
+    implementation("me.lucko:commodore:2.2") {
         isTransitive = false
     }
 }
@@ -34,7 +35,7 @@ tasks {
     }
 
     runServer {
-        minecraftVersion("1.19.1")
+        minecraftVersion("1.19.2")
     }
 
     build {
