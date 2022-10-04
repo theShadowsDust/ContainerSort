@@ -51,7 +51,7 @@ public final class ContainerSortCommand {
     @CommandDescription("Create a new language")
     public void addLanguageCommand(Player player) {
         var locale = player.locale();
-        this.languageService.updateLocale(locale, false).thenAcceptAsync(localeUpdateResult -> {
+        this.languageService.updateLocale(locale).thenAcceptAsync(localeUpdateResult -> {
             switch (localeUpdateResult) {
                 case CANNOT_SAVE -> player.sendMessage(this.languageService.getMessage(
                         "language-cannot-save", player, this.pluginPrefix, locale));
