@@ -44,7 +44,7 @@ public final class LanguageService {
 
         this.config = YamlConfiguration.loadConfiguration(file);
         if (saveDefaultMessages) {
-            updateLocale(Locale.US, false);
+            updateLocale(Locale.US);
         } else {
             updateLocales();
         }
@@ -85,23 +85,21 @@ public final class LanguageService {
         if (section == null) return;
         for (String key : section.getKeys(false)) {
             if (!key.contains("_")) continue;
-            updateLocale(LocaleUtils.toLocale(key), false);
+            updateLocale(LocaleUtils.toLocale(key));
         }
     }
 
-    public CompletableFuture<LocaleUpdateResult> updateLocale(@NotNull Locale locale, boolean override) {
+    public CompletableFuture<LocaleUpdateResult> updateLocale(@NotNull Locale locale) {
         return CompletableFuture.supplyAsync(() -> {
-            String localePath = "messages.%s";
+
             String path = "messages.%s.%s";
-
-            if ((this.config.isSet(path) && !override) || this.config.isSet(String.format(localePath, locale))) {
-                return LocaleUpdateResult.ALREADY_EXISTS;
-            }
-
             Iterator<String> iterator = this.defaultMessages.getKeys().asIterator();
             while (iterator.hasNext()) {
                 String next = iterator.next();
-                this.config.set(String.format(path, locale, next), this.defaultMessages.getString(next));
+                String formattedPath = path.formatted(locale, next);
+                if(this.config.isSet(formattedPath)) continue;
+                this.containerSortApi.getPlugin().getLogger().info(formattedPath);
+                this.config.set(formattedPath, this.defaultMessages.getString(next));
             }
 
             try {
