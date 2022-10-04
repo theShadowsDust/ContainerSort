@@ -19,7 +19,6 @@ import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;
 
@@ -28,16 +27,14 @@ public final class ContainerSortPlugin extends JavaPlugin {
     private ContainerSortApiImpl containerSortApi;
 
     @Override
-    public void onLoad() {
-        Optional<Integer> javaVersionOptional = Runtime.version().build();
-        if (javaVersionOptional.orElse(8) < 17) {
+    public void onEnable() {
+
+        int javaVersion = Runtime.version().feature();
+        if (javaVersion < 17) {
             getLogger().log(Level.WARNING, "Your Java Version is outdated! Please use 17 or newer");
             this.getServer().getPluginManager().disablePlugin(this);
+            return;
         }
-    }
-
-    @Override
-    public void onEnable() {
 
         PluginManager pluginManager = getServer().getPluginManager();
         try {
