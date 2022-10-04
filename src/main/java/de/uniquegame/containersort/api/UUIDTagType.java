@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.nio.LongBuffer;
 import java.util.UUID;
 
-public class UUIDTagType implements PersistentDataType<long[], UUID> {
+public final class UUIDTagType implements PersistentDataType<long[], UUID> {
 
     @Override
     public @NotNull Class<long[]> getPrimitiveType() {
