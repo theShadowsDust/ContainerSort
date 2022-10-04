@@ -39,9 +39,11 @@ public final class ContainerSortCommand {
         try {
             this.containerSortApi.reloadConfig();
             this.containerSortApi.getLanguageService().load();
-            commandSender.sendMessage(this.languageService.getMessage("config-reload-successfully", commandSender));
+            commandSender.sendMessage(this.languageService.getMessage(
+                    "config-reload-successfully", commandSender, this.pluginPrefix));
         } catch (IOException e) {
-            commandSender.sendMessage(this.languageService.getMessage("cannot-reload-config", commandSender));
+            commandSender.sendMessage(this.languageService.getMessage(
+                    "cannot-reload-config", commandSender, this.pluginPrefix));
             this.containerSortApi.getPlugin().getLogger().log(Level.SEVERE, e.getMessage(), e);
         }
     }
