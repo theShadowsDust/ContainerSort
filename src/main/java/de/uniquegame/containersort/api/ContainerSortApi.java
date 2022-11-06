@@ -8,7 +8,6 @@ import de.uniquegame.containersort.service.PersistentDataStoreService;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
@@ -17,6 +16,11 @@ import java.util.UUID;
 
 public interface ContainerSortApi {
 
+    /**
+     *
+     * @param sign the sign
+     * @return true if the given {@link Sign} is a sort sign.
+     */
     boolean isSortSign(@NotNull Sign sign);
 
     /**
@@ -25,9 +29,6 @@ public interface ContainerSortApi {
      */
     boolean isSignOwner(@NotNull UUID playerId, @NotNull Sign sign);
 
-    /**
-     * @return the {@link ContainerSortPlugin}
-     */
     ContainerSortPlugin getPlugin();
 
     PersistentDataStoreService getDataStoreService();
@@ -38,15 +39,39 @@ public interface ContainerSortApi {
 
     void reloadConfig() throws IOException;
 
+    /**
+     *
+     * @param property the property
+     * @param target the target value class
+     * @return the value of the given property
+     * @param <T> the target
+     */
     <T> T getPropertyValue(@NotNull ContainerSortProperty<T> property, @NotNull Class<T> target);
 
+    /**
+     *
+     * @param playerId the player that owns the {@link Sign}
+     * @param playerName the player name
+     * @param sortType the sort type defines how the container will be sorted
+     * @param sign the sign who the data will be stored
+     */
     void saveSignData(@NotNull UUID playerId,
                       @NotNull String playerName,
                       @NotNull SortType sortType,
-                      @NotNull SignChangeEvent event);
+                      @NotNull Sign sign);
 
+    /**
+     *
+     * @param state the blockState
+     * @return true if the blockState is a valid container
+     */
     boolean isValidContainer(@NotNull BlockState state);
 
 
+    /**
+     *
+     * @param sortType the sort type defines how the container will be sorted
+     * @param inventory the inventory to sort
+     */
     void sortContainer(@NotNull SortType sortType, @NotNull Inventory inventory);
 }

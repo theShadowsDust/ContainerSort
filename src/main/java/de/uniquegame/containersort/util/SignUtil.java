@@ -24,6 +24,11 @@ public final class SignUtil {
         throw new IllegalStateException("Utility class");
     }
 
+    /**
+     *
+     * @param container the container
+     * @return the connected {@link Sign} with the {@link Container}
+     */
     @Nullable
     public static Sign findConnectedSign(@NotNull Container container) {
 
@@ -39,6 +44,11 @@ public final class SignUtil {
         return sign;
     }
 
+    /**
+     *
+     * @param sign the sign
+     * @return the connected {@link Container} with the {@link Sign}
+     */
     @Nullable
     public static Container findConnectedContainer(@NotNull Sign sign) {
         var blockData = sign.getBlockData();
@@ -50,6 +60,11 @@ public final class SignUtil {
         return block != null && block.getState() instanceof Container container ? container : null;
     }
 
+    /**
+     *
+     * @param lines the lines of the sign
+     * @return the name of the owner from the sign
+     */
     @Nullable
     public static String findPlayerName(@NotNull List<Component> lines) {
 
