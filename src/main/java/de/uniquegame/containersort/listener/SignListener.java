@@ -7,6 +7,7 @@ import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.util.MessageUtil;
 import de.uniquegame.containersort.util.Permissions;
 import de.uniquegame.containersort.util.SignUtil;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -18,6 +19,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
 public final class SignListener implements Listener {
@@ -81,7 +83,13 @@ public final class SignListener implements Listener {
             }
 
             if (!cancel) {
-                this.containerSortApi.saveSignData(signOwnerId, playerName, sortType, event);
+                this.containerSortApi.saveSignData(signOwnerId, playerName, sortType, sign);
+
+                List<Component> lines = this.containerSortApi.getLanguageService().getSignLayout(playerName, sortType);
+                for (int i = 0; i < lines.size(); i++) {
+                    event.line(i, lines.get(i));
+                }
+
                 player.sendMessage(this.languageService.getMessage("sign-successfully-created", player, this.pluginPrefix));
             } else {
                 event.setCancelled(true);
