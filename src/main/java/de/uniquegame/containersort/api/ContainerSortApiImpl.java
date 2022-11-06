@@ -7,12 +7,10 @@ import de.uniquegame.containersort.service.ConfigurationService;
 import de.uniquegame.containersort.service.LanguageService;
 import de.uniquegame.containersort.service.PersistentDataStoreService;
 import de.uniquegame.containersort.util.InventoryUtil;
-import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Container;
 import org.bukkit.block.Sign;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -112,9 +110,7 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
     public void saveSignData(@NotNull UUID playerId,
                              @NotNull String playerName,
                              @NotNull SortType sortType,
-                             @NotNull SignChangeEvent event) {
-
-        Sign sign = (Sign) event.getBlock().getState();
+                             @NotNull Sign sign) {
 
         this.getDataStoreService().applyPersistentData(
                 sign,
@@ -128,10 +124,6 @@ public final class ContainerSortApiImpl implements ContainerSortApi {
                 (byte) 1);
 
         sign.update();
-        List<Component> lines = this.getLanguageService().getSignLayout(playerName, sortType);
-        for (int i = 0; i < lines.size(); i++) {
-            event.line(i, lines.get(i));
-        }
     }
 
     @Override
