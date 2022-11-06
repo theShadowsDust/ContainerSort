@@ -16,7 +16,7 @@ You will receive a .jar file. You have to put the file into your plugins folder.
 - Create a sort sign to sort a container
 - Prevent the item transfer by hoppers
 - Prevent other players from breaking your sort sign
-- Sort an container by right-clicking a sign
+- Sort a container by right-clicking a sign
 
 
 | Permission                  | Description                                   |
