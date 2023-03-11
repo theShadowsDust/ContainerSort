@@ -1,5 +1,5 @@
 # ContainerSort
-[![Run Gradle on Tags and Master](https://github.com/theShadowsDust/ContainerSort/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/UniqueGame/UltimateSpawn/actions/workflows/build.yaml)
+[![Run Gradle on Tags and Master](https://github.com/theShadowsDust/ContainerSort/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/theShadowsDust/UltimateSpawn/actions/workflows/build.yaml)
 
 
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/theShadowsDust/ContainerSort?sort=semver)
