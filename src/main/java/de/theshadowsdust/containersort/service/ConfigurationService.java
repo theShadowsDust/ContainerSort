@@ -29,16 +29,19 @@ public class ConfigurationService {
         this.api = api;
 
         this.configFile = new File(api.getPlugin().getDataFolder(), "config.json");
-        if (!this.configFile.exists()) {
-            Files.createFile(this.configFile.toPath());
-        }
-
         this.defaultConfig = new ContainerSortConfiguration(getPluginVersion(),
                 List.of("world_nether", "world_the_end"),
                 List.of("chest", "barrel", "shulker_box"),
                 ContainerSortProperty.DEFAULTS,
                 List.of("&f[&6ContainerSort&f]", "&e%sign_owner_name%", "%container_sort_type%", " "));
-        this.configuration = loadConfig();
+
+        if (Files.exists(this.configFile.toPath())) {
+            this.configuration = loadConfig();
+        } else {
+            Files.createFile(this.configFile.toPath());
+            this.configuration = defaultConfig;
+            saveConfig(this.defaultConfig);
+        }
     }
 
     public void reloadConfig() throws IOException {
@@ -58,7 +61,7 @@ public class ConfigurationService {
 
         try (BufferedReader bufferedReader = Files.newBufferedReader(this.configFile.toPath())) {
             config = gson.fromJson(bufferedReader, ContainerSortConfiguration.class);
-            needUpdate = !config.getPluginVersion().equals(defaultConfig.getPluginVersion());
+            needUpdate = config == null || !config.getPluginVersion().equals(defaultConfig.getPluginVersion());
         } catch (IOException e) {
             throw new IOException(e.getMessage());
         }
@@ -70,19 +73,29 @@ public class ConfigurationService {
                 Files.copy(this.configFile.toPath(), file.toPath());
             }
 
-            try (BufferedWriter writer = Files.newBufferedWriter(this.configFile.toPath())) {
-                config = defaultConfig;
-                writer.write(gson.toJson(defaultConfig));
-            } catch (IOException e) {
-                throw new IOException(e.getMessage());
-            }
+            config = defaultConfig;
+            saveConfig(defaultConfig);
         }
+
         return config;
     }
 
+    private void saveConfig(@NotNull ContainerSortConfiguration config) {
+        try (BufferedWriter writer = Files.newBufferedWriter(this.configFile.toPath())) {
+            writer.write(gson.toJson(config));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @SuppressWarnings("UnstableApiUsage")
     @NotNull
     private String getPluginVersion() {
-        String version = this.api.getPlugin().getDescription().getVersion();
+
+        var pluginMeta = this.api.getPlugin().getPluginMeta();
+        if (pluginMeta == null) return "";
+
+        String version = pluginMeta.getVersion();
         String versionSplitter = "-";
         if (version.contains(versionSplitter)) {
             version = version.split(versionSplitter)[0];
