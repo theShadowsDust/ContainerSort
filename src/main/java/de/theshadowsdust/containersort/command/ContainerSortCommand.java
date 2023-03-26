@@ -69,7 +69,7 @@ public final class ContainerSortCommand {
     @CommandPermission("containersort.command.editsign")
     public void executeEditSignCommand(@NotNull Player player) {
 
-        Block targetBlock = player.getTargetBlock(this.containerSortApi.
+        Block targetBlock = player.getTargetBlockExact(this.containerSortApi.
                 getPropertyValue(ContainerSortProperty.MAX_SIGN_DISTANCE, Double.class).intValue());
         if (targetBlock == null || !(targetBlock.getState() instanceof Sign sign)) {
             player.sendMessage(this.languageService.getMessage("no-sign-in-line-of-sight", player, this.pluginPrefix));
