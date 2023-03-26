@@ -1,4 +1,4 @@
-package de.uniquegame.containersort.util;
+package de.theshadowsdust.containersort.util;
 
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;

@@ -1,4 +1,4 @@
-package de.uniquegame.containersort;
+package de.theshadowsdust.containersort;
 
 import cloud.commandframework.annotations.AnnotationParser;
 import cloud.commandframework.arguments.parser.ParserParameters;
@@ -7,12 +7,12 @@ import cloud.commandframework.bukkit.CloudBukkitCapabilities;
 import cloud.commandframework.execution.CommandExecutionCoordinator;
 import cloud.commandframework.meta.CommandMeta;
 import cloud.commandframework.paper.PaperCommandManager;
-import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.api.ContainerSortApiImpl;
-import de.uniquegame.containersort.command.ContainerSortCommand;
-import de.uniquegame.containersort.listener.ContainerProtectionListener;
-import de.uniquegame.containersort.listener.PlayerInteractListener;
-import de.uniquegame.containersort.listener.SignListener;
+import de.theshadowsdust.containersort.api.ContainerSortApi;
+import de.theshadowsdust.containersort.api.ContainerSortApiImpl;
+import de.theshadowsdust.containersort.command.ContainerSortCommand;
+import de.theshadowsdust.containersort.listener.ContainerProtectionListener;
+import de.theshadowsdust.containersort.listener.SignListener;
+import de.theshadowsdust.containersort.listener.PlayerInteractListener;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;

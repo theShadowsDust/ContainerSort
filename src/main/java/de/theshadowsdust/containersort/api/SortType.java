@@ -1,7 +1,7 @@
-package de.uniquegame.containersort.api;
+package de.theshadowsdust.containersort.api;
 
 import com.google.common.collect.Maps;
-import de.uniquegame.containersort.util.MessageUtil;
+import de.theshadowsdust.containersort.util.MessageUtil;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,10 +1,10 @@
-package de.uniquegame.containersort.service;
+package de.theshadowsdust.containersort.service;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.configuration.ContainerSortConfiguration;
-import de.uniquegame.containersort.configuration.ContainerSortProperty;
+import de.theshadowsdust.containersort.api.ContainerSortApi;
+import de.theshadowsdust.containersort.configuration.ContainerSortConfiguration;
+import de.theshadowsdust.containersort.configuration.ContainerSortProperty;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;

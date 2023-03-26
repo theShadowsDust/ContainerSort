@@ -1,4 +1,4 @@
-package de.uniquegame.containersort.api;
+package de.theshadowsdust.containersort.api;
 
 import org.bukkit.persistence.PersistentDataAdapterContext;
 import org.bukkit.persistence.PersistentDataType;

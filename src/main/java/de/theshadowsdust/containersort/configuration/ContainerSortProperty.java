@@ -1,4 +1,4 @@
-package de.uniquegame.containersort.configuration;
+package de.theshadowsdust.containersort.configuration;
 
 import org.jetbrains.annotations.NotNull;
 

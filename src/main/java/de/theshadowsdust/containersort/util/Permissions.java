@@ -1,4 +1,4 @@
-package de.uniquegame.containersort.util;
+package de.theshadowsdust.containersort.util;
 
 public final class Permissions {
 

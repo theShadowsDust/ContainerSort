@@ -1,7 +1,7 @@
-package de.uniquegame.containersort.service;
+package de.theshadowsdust.containersort.service;
 
-import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.api.UUIDTagType;
+import de.theshadowsdust.containersort.api.ContainerSortApi;
+import de.theshadowsdust.containersort.api.UUIDTagType;
 import org.bukkit.NamespacedKey;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;

@@ -1,12 +1,12 @@
-package de.uniquegame.containersort.listener;
+package de.theshadowsdust.containersort.listener;
 
-import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.api.SortType;
-import de.uniquegame.containersort.configuration.ContainerSortProperty;
-import de.uniquegame.containersort.service.LanguageService;
-import de.uniquegame.containersort.util.MessageUtil;
-import de.uniquegame.containersort.util.Permissions;
-import de.uniquegame.containersort.util.SignUtil;
+import de.theshadowsdust.containersort.api.ContainerSortApi;
+import de.theshadowsdust.containersort.api.SortType;
+import de.theshadowsdust.containersort.configuration.ContainerSortProperty;
+import de.theshadowsdust.containersort.service.LanguageService;
+import de.theshadowsdust.containersort.util.MessageUtil;
+import de.theshadowsdust.containersort.util.Permissions;
+import de.theshadowsdust.containersort.util.SignUtil;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;

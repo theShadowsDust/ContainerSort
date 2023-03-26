@@ -1,8 +1,8 @@
-package de.uniquegame.containersort.service;
+package de.theshadowsdust.containersort.service;
 
-import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.api.SortType;
-import de.uniquegame.containersort.util.MessageUtil;
+import de.theshadowsdust.containersort.api.SortType;
+import de.theshadowsdust.containersort.api.ContainerSortApi;
+import de.theshadowsdust.containersort.util.MessageUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
 import org.apache.commons.lang3.LocaleUtils;

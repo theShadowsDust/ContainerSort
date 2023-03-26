@@ -1,10 +1,10 @@
-package de.uniquegame.containersort.api;
+package de.theshadowsdust.containersort.api;
 
-import de.uniquegame.containersort.ContainerSortPlugin;
-import de.uniquegame.containersort.configuration.ContainerSortConfiguration;
-import de.uniquegame.containersort.configuration.ContainerSortProperty;
-import de.uniquegame.containersort.service.LanguageService;
-import de.uniquegame.containersort.service.PersistentDataStoreService;
+import de.theshadowsdust.containersort.configuration.ContainerSortProperty;
+import de.theshadowsdust.containersort.service.LanguageService;
+import de.theshadowsdust.containersort.ContainerSortPlugin;
+import de.theshadowsdust.containersort.configuration.ContainerSortConfiguration;
+import de.theshadowsdust.containersort.service.PersistentDataStoreService;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;

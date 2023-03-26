@@ -1,6 +1,6 @@
-package de.uniquegame.containersort.util;
+package de.theshadowsdust.containersort.util;
 
-import de.uniquegame.containersort.api.ContainerSortApiImpl;
+import de.theshadowsdust.containersort.api.ContainerSortApiImpl;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;

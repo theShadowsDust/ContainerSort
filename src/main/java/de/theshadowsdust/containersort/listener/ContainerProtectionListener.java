@@ -1,9 +1,9 @@
-package de.uniquegame.containersort.listener;
+package de.theshadowsdust.containersort.listener;
 
-import de.uniquegame.containersort.api.ContainerSortApi;
-import de.uniquegame.containersort.configuration.ContainerSortProperty;
-import de.uniquegame.containersort.util.Permissions;
-import de.uniquegame.containersort.util.SignUtil;
+import de.theshadowsdust.containersort.api.ContainerSortApi;
+import de.theshadowsdust.containersort.configuration.ContainerSortProperty;
+import de.theshadowsdust.containersort.util.Permissions;
+import de.theshadowsdust.containersort.util.SignUtil;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.block.DoubleChest;
