@@ -1,7 +1,7 @@
 # ContainerSort
-[![Run Gradle on Tags and Master](https://github.com/UniqueGame/ContainerSort/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/UniqueGame/ChestSort/actions/workflows/build.yaml)
-![GitHub](https://img.shields.io/github/license/UniqueGame/ContainerSort)
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/UniqueGame/ContainerSort?sort=semver)
+[![Run Gradle on Tags and Master](https://github.com/theShadowsDust/ContainerSort/actions/workflows/build.yaml/badge.svg?branch=main)](https://github.com/theShadowsDust/ChestSort/actions/workflows/build.yaml)
+![GitHub](https://img.shields.io/github/license/theShadowsDust/ContainerSort)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/theShadowsDust/ContainerSort?sort=semver)
 
 Sort your storage container in a fast way  
 
